@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Shipping Administration</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+<head>
+    <title>Shipping Management | Romaire Boutique</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/favicon.png') }}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Outfit:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CDN for guaranteed icon loading -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/roma-theme.css') }}">
+
+    <style>
+        body {
+            background: #fffbfc;
+            font-family: var(--font-body, 'Quicksand', sans-serif);
+            min-height: 100vh;
+        }
+
+        .dashboard-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(to bottom, #fdf6f7, #fff);
+            text-align: center;
+        }
+
+        .dashboard-hero h2 {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: var(--roma-text);
+            letter-spacing: -1px;
+        }
+
+        .main-container {
+            padding: 0 0 100px;
+        }
+
+        .back-nav {
+            margin-bottom: 30px;
+        }
+
+        .btn-back-soft {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #a09295;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 12px 24px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(251, 203, 219, 0.2);
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(251, 203, 219, 0.1);
+        }
+
+        .btn-back-soft:hover {
+            color: var(--roma-accent);
+            background: #fff;
+            transform: translateX(-8px);
+            box-shadow: 0 8px 25px rgba(251, 203, 219, 0.25);
+            border-color: var(--roma-accent);
+        }
+
+        /* Glassmorphism Cards */
+        .roma-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            border: 1px solid rgba(251, 203, 219, 0.3);
+            box-shadow: 0 10px 30px rgba(251, 203, 219, 0.1);
+            padding: 35px;
+            margin-bottom: 40px;
+        }
+
+        .roma-card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--roma-text);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .roma-card-title i {
+            color: var(--roma-accent);
+        }
+
+        /* Add Form Layout */
+        .roma-add-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 150px;
+            gap: 20px;
+            align-items: end;
+        }
+
+        @media (max-width: 768px) {
+            .roma-add-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roma-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .roma-field label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #887e80;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .roma-field input {
+            padding: 14px 18px;
+            border-radius: 15px;
+            border: 1.5px solid rgba(251, 203, 219, 0.4);
+            background: rgba(255, 255, 255, 0.6);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .roma-field input:focus {
+            border-color: var(--roma-accent);
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(251, 203, 219, 0.15);
+        }
+
+        .btn-roma-add {
+            background: linear-gradient(135deg, var(--roma-primary), var(--roma-primary-hover));
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 15px;
+            font-weight: 800;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(251, 203, 219, 0.4);
+        }
+
+        .btn-roma-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(251, 203, 219, 0.5);
+        }
+
+        /* Modern Table */
+        .roma-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .roma-table th {
+            padding: 15px 20px;
+            color: #a09295;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+        }
+
+        .roma-table tr td {
+            background: #fff;
+            padding: 20px;
+            border-top: 1px solid rgba(251, 203, 219, 0.1);
+            border-bottom: 1px solid rgba(251, 203, 219, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .roma-table tr td:first-child {
+            border-left: 1px solid rgba(251, 203, 219, 0.1);
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
+        }
+
+        .roma-table tr td:last-child {
+            border-right: 1px solid rgba(251, 203, 219, 0.1);
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+
+        .roma-table tr:hover td {
+            background: #fdf6f7;
+            transform: scale(1.005);
+        }
+
+        .city-name {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--roma-text);
+        }
+
+        .price-badge {
+            background: #fff;
+            color: var(--roma-accent);
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-weight: 800;
+            border: 1px solid rgba(251, 203, 219, 0.4);
+        }
+
+        .btn-roma-delete {
+            background: #fff;
+            color: #ff4d4d;
+            border: 1px solid #ffebeb;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-roma-delete:hover {
+            background: #ff4d4d;
+            color: #fff;
+            transform: rotate(10deg);
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-hero {
+                padding: 100px 20px 40px;
+            }
+            .dashboard-hero h2 {
+                font-size: 1.8rem;
+            }
+            .roma-card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+            .city-name {
+                font-size: 1rem;
+            }
+            .price-badge {
+                padding: 5px 10px;
+                font-size: 0.85rem;
+                display: block;
+                text-align: center;
+                white-space: nowrap;
+            }
+            .roma-table tr td {
+                padding: 12px 10px;
+            }
+            .btn-roma-delete {
+                width: 34px;
+                height: 34px;
+            }
+        }
+    </style>
+</head>
+<body class="animsition">
+    {% include "header.html" %}
+
+    <div class="dashboard-hero">
+        <div class="container">
+            <h2>Shipping & Logistics</h2>
+            <p>Manage cities and their respective delivery costs.</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="container">
+            
+            <div class="back-nav">
+                <a href="/dashboard" class="btn-back-soft">
+                    <i class="fa fa-chevron-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+            </div>
+
+            <!-- ADD SECTION -->
+            <div class="roma-card">
+                <div class="roma-card-title">
+                    <i class="fa fa-map-plus"></i>
+                    <span>Add New Destination</span>
+                </div>
+                
+                <form action="/admin/shipping/add" method="POST" class="roma-add-grid">
+                    <div class="roma-field">
+                        <label>City Name / اسم المحافظة</label>
+                        <input type="text" name="city" placeholder="e.g. القاهرة" required dir="auto">
+                    </div>
+                    
+                    <div class="roma-field">
+                        <label>Shipping Cost (E£)</label>
+                        <input type="number" name="price" placeholder="e.g. 50" required min="0">
+                    </div>
+                    
+                    <button type="submit" class="btn-roma-add">
+                        <i class="fa fa-plus-circle"></i> Add City
+                    </button>
+                </form>
+            </div>
+
+            <!-- LIST SECTION -->
+            <div class="roma-card" style="background: rgba(255,255,255,0.4)">
+                <div class="roma-card-title">
+                    <i class="fa fa-globe"></i>
+                    <span>Active Shipping Rates</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="roma-table">
+                        <thead>
+                            <tr>
+                                <th>City / Area</th>
+                                <th>Rate (E£)</th>
+                                <th style="width: 80px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in prices %}
+                            <tr>
+                                <td>
+                                    <span class="city-name">{{ item.city }}</span>
+                                </td>
+                                <td>
+                                    <span class="price-badge">{{ item.price }} E£</span>
+                                </td>
+                                <td>
+                                    <form action="/admin/shipping/delete/{{ item.id }}" method="POST" onsubmit="return confirm('Remove shipping rate for {{ item.city }}?')">
+                                        <button type="submit" class="btn-roma-delete" title="Delete Destination">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" style="text-align: center; color: #999; padding: 40px;">
+                                    No shipping data available. Please add some cities!
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

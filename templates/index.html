@@ -1,0 +1,706 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <title>Home</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/icons/favicon.png') }}"
+    />
+
+    <!-- Bootstrap 5.3.8 CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='fonts/linearicons-v1.0.0/icon-font.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/animate/animate.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/animsition/css/animsition.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/select2/select2.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/slick/slick.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/MagnificPopup/magnific-popup.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/perfect-scrollbar/perfect-scrollbar.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/custom.css') }}"
+    />
+  </head>
+  <body class="animsition">
+    {% include 'header.html' %}
+
+    <!-- Antigravity Premium Hero Section -->
+    <section class="anti-hero-section">
+      <div class="anti-background-layer"></div>
+
+      <div class="container anti-hero-container">
+        <div class="row align-items-center">
+          <!-- Text Content Side -->
+          <div class="col-lg-6 anti-hero-text-col order-lg-1">
+            <div class="anti-hero-content">
+              <h2 class="anti-hero-brand">فايف ستار</h2>
+              <h1 class="anti-hero-title">ارتقِ بأسلوبك مع فايف ستار</h1>
+              <p class="anti-hero-description">
+                ارتقِ بأسلوبك مع فايف ستار. مجموعات متكاملة من الأحذية النسائية،
+                الرجالية، وأحذية الأطفال، بالإضافة إلى إكسسوارات راقية. اكتشف
+                التميز اليوم.
+              </p>
+              <div class="anti-hero-actions">
+                <a href="{{url_for('shop')}}" class="anti-btn-primary"
+                  >اكتشف التميز اليوم</a
+                >
+                <a href="{{url_for('shop')}}" class="anti-btn-link"
+                  >تصفح المجموعة</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Weightless Product Side -->
+          <div class="col-lg-6 anti-hero-visual-col order-lg-2">
+            <div class="anti-visual-composition">
+              <!-- Ambient Backdrops (Washes) -->
+              <div class="anti-wash anti-wash-women"></div>
+              <div class="anti-wash anti-wash-men"></div>
+              <div class="anti-wash anti-wash-kids"></div>
+
+              <!-- Floating Products -->
+              <div class="anti-product anti-product-1 float-animation">
+                <img src="/static/images/hero-2.jpg" alt="Premium Heels" />
+                <div class="anti-shadow"></div>
+              </div>
+              <div class="anti-product anti-product-2 float-animation-delayed">
+                <img src="/static/images/hero-1.jpg" alt="Classic Watch" />
+                <div class="anti-shadow"></div>
+              </div>
+              <div class="anti-product anti-product-3 float-animation">
+                <img src="/static/imgs/blaner-1.jpg" alt="Kids Sneakers" />
+                <div class="anti-shadow"></div>
+              </div>
+
+              <!-- Decorative Floating Elements -->
+              <div class="anti-particle item-p1"></div>
+              <div class="anti-particle item-p2"></div>
+              <div class="anti-particle item-p3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      :root {
+        --anti-bg: #f5f5f5;
+        --anti-teal: #35627a;
+        --anti-terracotta: #b46258;
+        --anti-lavender: #a6a9d0;
+        --anti-rose: #e5aea9;
+        --anti-slate: #8e9a98;
+      }
+
+      .anti-hero-section {
+        position: relative;
+        padding: 120px 0 160px 0;
+        background-color: var(--anti-bg);
+        overflow: hidden;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+      }
+
+      .anti-hero-container {
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Text Styles */
+      .anti-hero-content {
+        text-align: right;
+        padding-left: 40px;
+      }
+
+      .anti-hero-brand {
+        font-family: "Cairo", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--anti-terracotta);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .anti-hero-title {
+        font-family: "Cairo", sans-serif;
+        font-size: 3.8rem;
+        font-weight: 800;
+        color: var(--anti-teal);
+        line-height: 1.2;
+        margin-bottom: 25px;
+      }
+
+      .anti-hero-description {
+        font-family: "Cairo", sans-serif;
+        font-size: 1.3rem;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 45px;
+        max-width: 550px;
+        margin-right: 0;
+        margin-left: auto;
+      }
+
+      .anti-hero-actions {
+        display: flex;
+        gap: 20px;
+        justify-content: flex-start;
+        flex-direction: row-reverse;
+      }
+
+      .anti-btn-primary {
+        background-color: var(--anti-terracotta);
+        color: white !important;
+        padding: 18px 45px;
+        border-radius: 4px;
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        box-shadow: 0 10px 20px rgba(180, 98, 88, 0.2);
+        transition: all 0.4s ease;
+      }
+
+      .anti-btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(180, 98, 88, 0.3);
+        background-color: #9e534a;
+      }
+
+      .anti-btn-link {
+        color: var(--anti-teal) !important;
+        padding: 18px 0;
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .anti-btn-link::after {
+        content: "";
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--anti-teal);
+        transition: width 0.3s ease;
+      }
+
+      .anti-btn-link:hover::after {
+        width: 100%;
+      }
+
+      /* Visual Composition (Antigravity) */
+      .anti-visual-composition {
+        position: relative;
+        height: 600px;
+        width: 100%;
+      }
+
+      /* Ambient Washes */
+      .anti-wash {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        z-index: 1;
+      }
+
+      .anti-wash-women {
+        background-color: var(--anti-lavender);
+        top: 10%;
+        right: 10%;
+      }
+      .anti-wash-men {
+        background-color: var(--anti-slate);
+        bottom: 10%;
+        left: 10%;
+      }
+      .anti-wash-kids {
+        background-color: var(--anti-rose);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Floating Products */
+      .anti-product {
+        position: absolute;
+        z-index: 5;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        padding: 10px;
+        transition: all 0.5s ease;
+      }
+
+      .anti-product img {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+        display: block;
+      }
+
+      .anti-product-1 {
+        width: 280px;
+        top: 10%;
+        right: 5%;
+        z-index: 7;
+      }
+      .anti-product-2 {
+        width: 220px;
+        bottom: 15%;
+        left: 5%;
+        z-index: 8;
+      }
+      .anti-product-3 {
+        width: 200px;
+        top: 45%;
+        left: 35%;
+        z-index: 6;
+      }
+
+      .anti-shadow {
+        position: absolute;
+        bottom: -40px;
+        left: 10%;
+        width: 80%;
+        height: 10px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.08) 0%,
+          transparent 70%
+        );
+        filter: blur(8px);
+        z-index: 4;
+      }
+
+      /* Animations */
+      @keyframes float {
+        0% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(1deg);
+        }
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+      }
+
+      .float-animation {
+        animation: float 6s ease-in-out infinite;
+      }
+      .float-animation-delayed {
+        animation: float 8s ease-in-out infinite 1s;
+      }
+
+      /* Decorative Particles */
+      .anti-particle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--anti-teal);
+        opacity: 0.2;
+        z-index: 2;
+      }
+
+      .item-p1 {
+        top: 20%;
+        left: 10%;
+        width: 8px;
+        height: 8px;
+      }
+      .item-p2 {
+        bottom: 30%;
+        right: 20%;
+        width: 14px;
+        height: 14px;
+      }
+      .item-p3 {
+        top: 60%;
+        right: 5%;
+      }
+
+      /* Responsive */
+      @media (max-width: 991px) {
+        .anti-hero-section {
+          padding: 100px 0 60px 0;
+          text-align: center;
+        }
+        .anti-hero-content {
+          text-align: center;
+          padding-left: 0;
+          margin-bottom: 60px;
+        }
+        .anti-hero-title {
+          font-size: 2.8rem;
+        }
+        .anti-hero-description {
+          margin: 0 auto 35px auto;
+        }
+        .anti-hero-actions {
+          justify-content: center;
+        }
+        .anti-visual-composition {
+          height: 450px;
+        }
+        .anti-product {
+          transform: scale(0.8);
+        }
+      }
+    </style>
+    <!-- Banner -->
+    <style>
+      .premium-banner-wrapper {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .premium-banner-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        display: block;
+        height: auto;
+        text-decoration: none !important;
+        background-color: #f8f9fa;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: pointer;
+      }
+      .premium-banner-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+      }
+      .premium-banner-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* Default muted/professional filter */
+        filter: grayscale(0.2) contrast(0.9) brightness(0.9);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .premium-banner-card:hover .premium-banner-img {
+        filter: grayscale(0) contrast(1) brightness(1);
+        transform: scale(1.02);
+      }
+      /* Centered Luxury Glass Badge */
+      .banner-glass-badge {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75%;
+        padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(4px) saturate(120%);
+        -webkit-backdrop-filter: blur(4px) saturate(120%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        text-align: center;
+        z-index: 5;
+        transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .premium-banner-card:hover .banner-glass-badge {
+        background: rgba(255, 255, 255, 0.2);
+        width: 80%;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      .banner-label {
+        font-family: "Cairo", sans-serif;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.75rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 15px;
+        display: block;
+        transition: all 0.5s ease;
+      }
+      .banner-title {
+        font-family: "Playfair Display", "Times New Roman", serif;
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        line-height: 1.1;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.5s ease;
+        text-transform: capitalize;
+      }
+      .banner-discover {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        color: #fff;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        opacity: 0.8;
+        display: inline-block;
+        position: relative;
+        padding-bottom: 5px;
+        transition: all 0.5s ease;
+      }
+      .banner-discover::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #fff;
+        transition: width 0.5s ease;
+      }
+      .premium-banner-card:hover .banner-discover::after {
+        width: 100%;
+      }
+      /* Section Header Styling */
+      .banner-section-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .banner-section-header h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: #222;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 15px;
+      }
+      .banner-section-header h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background: #d4af37; /* Champagne/Gold accent */
+      }
+    </style>
+    <div class="sec-banner bg0 premium-banner-wrapper">
+      <div class="container">
+        <div class="banner-section-header">
+          <h2>مجموعاتنا المتميزة</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 p-b-30 m-lr-auto">
+            <a href="{{url_for('shop')}}" class="premium-banner-card">
+              <img
+                src="/static/imgs/m1.jpg"
+                class="premium-banner-img"
+                alt="Pants"
+                loading="lazy"
+              />
+              <div class="banner-glass-badge">
+                <span class="banner-label">مجموعة جديدة</span>
+                <h4 class="banner-title">أحذيه رجالي</h4>
+                <div class="banner-discover">اكتشف المزيد</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 p-b-30 m-lr-auto">
+            <a href="{{url_for('shop')}}" class="premium-banner-card">
+              <img
+                src="/static/imgs/m2.jpg"
+                class="premium-banner-img"
+                alt="Shmiz"
+                loading="lazy"
+              />
+              <div class="banner-glass-badge">
+                <span class="banner-label">الأكثر رواجاً</span>
+                <h4 class="banner-title">أحذيه أطفال</h4>
+                <div class="banner-discover">تصفح المجموعة</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 p-b-30 m-lr-auto">
+            <a href="{{url_for('shop')}}" class="premium-banner-card">
+              <img
+                src="/static/imgs/m3.jpg"
+                class="premium-banner-img"
+                alt="Skirts"
+                loading="lazy"
+              />
+              <div class="banner-glass-badge">
+                <span class="banner-label">حصرياً</span>
+                <h4 class="banner-title">أحذيه حريمي</h4>
+                <div class="banner-discover">تسوقي الآن</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product -->
+    <section class="bg0 p-t-23 p-b-140">
+      <div class="container">
+        <div class="p-b-10">
+          <h3 class="ltext-103 cl5">نظرة عامة على المنتجات</h3>
+        </div>
+        <!-- shop body -->
+        {% include 'shop-body.html' %}
+      </div>
+    </section>
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+
+    <!--===============================================================================================-->
+    <script src="{{url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/animsition/js/animsition.min.js') }} "></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{url_for('static', filename='vendor/select2/select2.min.js') }}"></script>
+    <script>
+      $(".js-select2").each(function () {
+        $(this).select2({
+          minimumResultsForSearch: 20,
+          dropdownParent: $(this).next(".dropDownSelect2"),
+        });
+      });
+    </script>
+    <script src="{{url_for('static', filename='vendor/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{url_for('static', filename='vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{url_for('static', filename='vendor/slick/slick.min.js') }}"></script>
+    <script src="{{url_for('static', filename='js/slick-custom.js') }}"></script>
+    <script src="{{url_for('static', filename='vendor/parallax100/parallax100.js') }}"></script>
+    <script>
+      $(".parallax100").parallax100();
+    </script>
+    <script src="{{url_for('static', filename='vendor/MagnificPopup/jquery.magnific-popup.min.js') }}"></script>
+    <script>
+      $(".gallery-lb").each(function () {
+        $(this).magnificPopup({
+          delegate: "a",
+          type: "image",
+          gallery: { enabled: true },
+          mainClass: "mfp-fade",
+        });
+      });
+    </script>
+    <script src="{{url_for('static', filename='vendor/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{url_for('static', filename='vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{url_for('static', filename='vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script>
+      $(".js-pscroll").each(function () {
+        $(this).css("position", "relative");
+        $(this).css("overflow", "hidden");
+        var ps = new PerfectScrollbar(this, {
+          wheelSpeed: 1,
+          scrollingThreshold: 1000,
+          wheelPropagation: false,
+        });
+        $(window).on("resize", function () {
+          ps.update();
+        });
+      });
+    </script>
+    <script src="{{url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/shop-logic.js') }}"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

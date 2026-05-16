@@ -1,0 +1,476 @@
+<div class="bg0 m-t-23 p-b-140 pt-5">
+  <div class="container">
+    <div class="flex-w flex-sb-m p-b-52">
+      <div class="category-nav-wrapper">
+        <div class="category-grid filter-tope-group">
+          <div class="category-card how-active1" data-filter="*">
+            <div class="icon-box"><i class="fa fa-th-large"></i></div>
+            <span>الكل</span>
+          </div>
+
+          <div class="category-card" data-filter=".hot-price">
+            <div class="icon-box"><i class="fa fa-fire"></i></div>
+            <span>عروض ساخنة</span>
+          </div>
+
+          <div class="category-card" data-filter=".top-selling">
+            <div class="icon-box"><i class="fa fa-star"></i></div>
+            <span>الأكثر مبيعاً</span>
+          </div>
+
+          <div class="category-card" data-filter=".women">
+            <div class="icon-box"><i class="fa fa-female"></i></div>
+            <span>حريمي</span>
+          </div>
+          <div class="category-card" data-filter=".men">
+            <div class="icon-box"><i class="fa fa-male"></i></div>
+            <span>رجالي</span>
+          </div>
+          <div class="category-card" data-filter=".kids">
+            <div class="icon-box"><i class="fa fa-child"></i></div>
+            <span>أطفال</span>
+          </div>
+          <div class="category-card" data-filter=".accessories">
+            <div class="icon-box"><i class="fa fa-diamond"></i></div>
+            <span>أكسسوارات</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-w flex-c-m m-tb-10">
+        <div
+          class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search"
+        >
+          <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+          <i
+            class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"
+          ></i>
+          بحث
+        </div>
+      </div>
+
+      <!-- Search product -->
+      <form action="{{url_for('home')}}" method="get">
+        <div class="dis-none panel-search w-full p-t-10 p-b-15">
+          <div class="bor8 dis-flex p-l-15">
+            <a class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+              <i class="zmdi zmdi-search"></i>
+            </a>
+            <input
+              class="mtext-107 cl2 size-114 plh2 p-r-15"
+              type="text"
+              name="search"
+              placeholder="بحث..."
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row isotope-grid">
+      {% for item in items: %} {% set is_hot = item.old_price or
+      item.discount_label %} {% set is_top = item.name in top_selling %}
+      <div
+        class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {% if item.category %}{{item.category}}{% endif %} {% if is_hot %}hot-price{% endif %} {% if is_top %}top-selling{% endif %} rounded-2"
+        id="popup"
+      >
+        <!-- Antigravity Elite Product Card -->
+        <div class="anti-card" data-category="{{item.name}}">
+
+
+          <!-- Discount Label (Same horizontal level) -->
+          {% if item.discount_label %}
+          <div class="discount-badge">{{ item.discount_label }}</div>
+          {% endif %}
+
+          <div class="anti-card-inner">
+            <!-- Visual Section (Floating Product) -->
+            <div class="anti-visual-wrap js-show-modal1" data-id="{{ item.id }}">
+              <div class="anti-img-float">
+                <img
+                  src="{{ item.item_imgs[0].img if item.item_imgs|length > 0 else url_for('static', filename='images/blog-06.jpg') }}"
+                  alt="{{item.name}}"
+                  class="anti-product-img"
+                  loading="lazy"
+                />
+                <div class="anti-product-shadow"></div>
+              </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="anti-info-wrap">
+              <div class="anti-info-top">
+                <a href="#" class="anti-title js-show-modal1" data-id="{{item.id}}">
+                  {{item.name}}
+                </a>
+                <div class="product-price-display">
+                  {% if item.old_price %}
+                  <span class="price-old">{{ item.old_price }} ج.م</span>
+                  {% endif %}
+                  <span class="price-new">{{ item.price }} ج.م</span>
+                </div>
+              </div>
+
+              <div class="anti-actions">
+                <button class="anti-cta-btn js-show-modal1" data-id="{{item.id}}">
+                  <span>إضافة للسلة</span>
+                  <i class="zmdi zmdi-shopping-cart-plus"></i>
+                </button>
+                
+                {% if current_user.is_authenticated %}
+                <div class="anti-admin-tools">
+                   <button class="anti-admin-btn delete-btn" data-id="{{item.id}}" title="حذف">
+                     <i class="zmdi zmdi-delete"></i>
+                   </button>
+                   <button class="anti-admin-btn edit-btn" onclick="goToEditPage('{{item.id}}')" title="تعديل">
+                     <i class="zmdi zmdi-edit"></i>
+                   </button>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+      <!-- add new item if you are an admin -->
+      {% if current_user.is_authenticated %}
+      <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+        <!-- Block2 -->
+        <button id="add-new-item">
+          <div class="add-new-box">+</div>
+        </button>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <!-- back to up button -->
+  <div class="btn-back-to-top" id="myBtn">
+    <span class="symbol-btn-back-to-top">
+      <i class="zmdi zmdi-chevron-up"></i>
+    </span>
+  </div>
+
+  <!-- show model -->
+  <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+    <div class="overlay-modal1 js-hide-modal1"></div>
+    <div class="container rounded-2">
+      <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent rounded-3">
+        <button class="how-pos3 hov3 trans-04 js-hide-modal1">
+          <img src="/static/images/icons/icon-close.png" alt="CLOSE" />
+        </button>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-7 p-b-30">
+            <div class="p-l-25 p-r-30 p-lr-0-lg">
+              <div class="custom-gallery">
+                <div class="custom-gallery-main mb-3 text-center d-flex align-items-center justify-content-center" style="height: 420px; background-color: #f8f9fa; border-radius: 8px; overflow: hidden;">
+                  <img id="custom-main-img" src="" alt="" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain; transition: opacity 0.3s ease-in-out;">
+                </div>
+                <div class="custom-gallery-thumbs d-flex flex-nowrap gap-2 overflow-auto align-items-center justify-content-start pb-2" id="custom-thumbs-container" style="scrollbar-width: thin;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-5 p-b-30">
+            <div class="p-r-50 p-t-5 p-lr-0-lg">
+              <h4
+                class="mtext-105 cl2 js-name-detail p-b-14"
+                id="name"
+                style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+              ></h4>
+
+              <span class="stext-200 cl2" id="price" style="font-size: 1.2rem">
+              </span>
+
+              <p
+                class="stext-102 cl3 p-t-23"
+                id="description"
+                style="
+                  font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;;
+                  text-align: right;
+                "
+              ></p>
+
+              <!--  -->
+              <div class="p-t-33">
+                <div class="flex-w flex-c-m p-b-10">
+                  <div class="size-203 flex-c-m respon6 p-b-10 w-full text-center">اللون</div>
+
+                  <div class="size-204 respon6-next">
+                    <div
+                      class="rs1-select2 bor8 bg0"
+                      style="
+                        font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;;
+                        visibility: hidden;
+                      "
+                    >
+                      <select
+                        style="
+                          font-family:
+                            &quot;Cairo&quot;, &quot;sans-serif&quot;;
+                        "
+                        class="js-select2"
+                        name="time"
+                        id="color"
+                      ></select>
+                      <div
+                        class="dropDownSelect2"
+                        style="
+                          font-family:
+                            &quot;Cairo&quot;, &quot;sans-serif&quot;;
+                        "
+                      ></div>
+                    </div>
+                    <!-- Rendered by static/js/main.js (shows all colors as clickable chips) -->
+                    <div id="colorOptions" class="color-chip-list d-flex justify-content-center flex-wrap" dir="auto"></div>
+                  </div>
+                </div>
+
+                <div class="flex-w flex-c-m p-b-10 pt-2" id="sizeRow">
+                  <div class="size-203 flex-c-m respon6 p-b-10 w-full text-center">المقاس</div>
+                  <div class="size-204 respon6-next">
+                    <!-- Rendered by static/js/main.js (shows all sizes as clickable chips) -->
+                    <div id="sizeOptions" class="size-chip-list d-flex justify-content-center flex-wrap" dir="auto"></div>
+                  </div>
+                </div>
+
+                <div class="flex-w flex-c-m p-b-20 pt-3">
+                    <div class="wrap-num-product flex-w m-tb-10">
+                      <div
+                        class="input-group quantity-box"
+                        style="width: 140px"
+                      >
+                        <button
+                          class="btn btn-outline-dark minus-btn"
+                          type="button"
+                        >
+                          −
+                        </button>
+
+                        <input
+                          type="text"
+                          class="form-control text-center quantity-input"
+                          value="1"
+                          id="amount"
+                        />
+
+                        <button
+                          class="btn btn-outline-dark plus-btn"
+                          type="button"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="flex-column flex-c-m w-full m-tb-10">
+                      <button
+                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                        id="add-cart"
+                        style="max-width: 250px;"
+                      >
+                        إضافة للسلة
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- add new item -->
+  <div class="wrap-modal1 js-admin-modal p-t-60 p-b-20">
+    <div class="overlay-modal1 js-hide-admin-modal"></div>
+
+    <div class="container rounded-2">
+      <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent rounded-3">
+        <button class="how-pos3 hov3 trans-04 js-hide-admin-modal">
+          <img src="/static/images/icons/icon-close.png" />
+        </button>
+
+        <div class="row">
+          <!-- IMAGES -->
+          <div class="col-md-6 col-lg-7 p-b-30">
+            <div class="p-l-25 p-r-30 p-lr-0-lg">
+              <!-- MAIN IMAGE -->
+              <div class="admin-main-img mb-3 text-center">
+                <img
+                  id="mainPreview"
+                  src="/static/images/placeholder.png"
+                  class="img-fluid rounded border"
+                  style="max-height: 350px"
+                />
+              </div>
+
+              <!-- THUMBNAILS -->
+              <div class="d-flex flex-wrap gap-2" id="thumbContainer"></div>
+
+              <!-- ADD IMAGE -->
+              <div class="mt-3">
+                <input
+                  type="file"
+                  id="imageInput"
+                  multiple
+                  accept="image/*"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- PRODUCT DATA -->
+          <div class="col-md-6 col-lg-5 p-b-30">
+            <div class="p-r-50 p-t-5 p-lr-0-lg">
+              <!-- NAME -->
+              <input
+                type="text"
+                class="form-control mb-3"
+                placeholder="اسم المنتج"
+                id="itemName"
+                style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+              />
+
+              <!-- PRICE -->
+              <input
+                type="number"
+                class="form-control mb-3"
+                placeholder="السعر الحالي"
+                id="itemPrice"
+              />
+
+              <!-- OLD PRICE -->
+              <input
+                type="number"
+                class="form-control mb-3"
+                placeholder="السعر السابق (اختياري)"
+                id="itemOldPrice"
+              />
+
+              <!-- DISCOUNT LABEL -->
+              <input
+                type="text"
+                class="form-control mb-3"
+                placeholder="ملصق الخصم (مثال: خصم 20%)"
+                id="itemDiscountLabel"
+                style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+              />
+
+              <!-- DESCRIPTION -->
+              <textarea
+                class="form-control mb-3"
+                rows="4"
+                placeholder="وصف المنتج"
+                id="itemDesc"
+                style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+              ></textarea>
+
+              <!-- CATEGORY -->
+              <select class="form-control mb-3" id="itemCategory" style="font-family: 'Cairo', sans-serif">
+                <option value="">-- اختر القسم --</option>
+                <option value="women">👩 حريمي</option>
+                <option value="men">👨 رجالي</option>
+                <option value="kids">👶 أطفال</option>
+                <option value="accessories">👜 أكسسوارات</option>
+                <option value="hot">🔥 عروض ساخنة</option>
+                <option value="top">🌟 الأكثر مبيعاً</option>
+              </select>
+
+              <!-- COLORS -->
+              <div class="mb-3">
+                <label class="form-label">Colors</label>
+
+                <div
+                  id="colorContainer"
+                  style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+                ></div>
+
+                <div class="input-group mt-2">
+                  <input
+                    type="text"
+                    id="newColor"
+                    class="form-control"
+                    placeholder="إضافة لون"
+                    style="
+                      font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;;
+                    "
+                  />
+                  <button class="btn btn-dark" id="addColor">إضافة</button>
+                </div>
+              </div>
+
+              <!-- SIZES -->
+              <div class="mb-3">
+                <label class="form-label">Sizes</label>
+
+                <div
+                  id="sizeContainer"
+                  style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+                ></div>
+
+                <div class="input-group mt-2">
+                  <input
+                    type="text"
+                    id="newSize"
+                    class="form-control"
+                    placeholder="إضافة مقاس"
+                    style="
+                      font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;;
+                    "
+                  />
+                  <button class="btn btn-dark" id="addSize">إضافة</button>
+                </div>
+              </div>
+              <button class="btn btn-success w-100 mt-3" id="saveItem">
+                حفظ المنتج
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- pop up message for the delete -->
+  <div id="confirmOverlay" class="confirm-overlay">
+    <div class="confirm-modal">
+      <div class="confirm-icon">⚠</div>
+
+      <h3 class="confirm-title">هل أنتِ متأكدة؟</h3>
+
+      <p class="confirm-text">
+        لا يمكن التراجع عن هذا الإجراء. سيتم حذف المنتج نهائياً من المتجر.
+      </p>
+
+      <div class="confirm-buttons">
+        <button class="btn-cancel" onclick="closeConfirmPopup()">إلغاء</button>
+
+        <button class="btn-danger-confirm delete-item" id="popupDeleteBtn">
+          تأكيد الحذف
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Premium Cart Confirmation Modal -->
+  <div id="cart-confirm-overlay" class="cart-confirm-overlay">
+    <div class="cart-confirm-modal">
+      <div class="cart-confirm-icon">
+        <i class="zmdi zmdi-check-circle"></i>
+      </div>
+      <h3 class="cart-confirm-title">تمت الإضافة للسلة!</h3>
+      <p class="cart-confirm-text">
+        تمت إضافة المنتج بنجاح إلى سلة الطلبات الخاصة بكِ.
+      </p>
+        <div class="cart-confirm-buttons">
+            <a href="{{url_for('home')}}" class="btn-continue-shopping">متابعة التسوق</a>
+            <a href="{{url_for('check_out')}}" class="btn-goto-checkout">إتمام الطلب</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

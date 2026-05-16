@@ -1,0 +1,35 @@
+/* Fail-safe Dashboard Icon Fix */
+.fa, i.fa {
+    font-family: FontAwesome !important;
+    display: inline-block !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+}
+
+.zmdi, i.zmdi {
+    font-family: 'Material-Design-Iconic-Font' !important;
+    display: inline-block !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+}
+
+.lnr, i.lnr {
+    font-family: 'Linearicons-Free' !important;
+    display: inline-block !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+}
+
+/* Ensure no font override on i tags */
+i, [class*="fa-"], [class*="zmdi-"] {
+    font-family: inherit !important;
+    font-family: FontAwesome !important;
+}
+
+.zmdi {
+    font-family: 'Material-Design-Iconic-Font' !important;
+}
+鼓

@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>لوحه التحكم |إستبرق</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/icons/favicon.png') }}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/animate/animate.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/animsition/css/animsition.min.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/select2/select2.min.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/slick/slick.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/MagnificPopup/magnific-popup.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/perfect-scrollbar/perfect-scrollbar.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <!--===============================================================================================-->
+    <style>
+      html {
+        background: var(--roma-bg-soft, #fffbfc);
+      }
+      h1 {
+        margin-top: 50px;
+      }
+      body {
+        font-family: Arial;
+
+        padding: 0;
+      }
+      body *:lang(ar),
+      body *:lang(arb),
+      body *[dir="rtl"] {
+        font-family: "Cairo", Arial, sans-serif !important;
+        direction: rtl;
+      }
+
+      .dashboard {
+        margin: 100px auto;
+        max-width: 900px;
+        /* margin-top: 120px;
+        
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 100px; */
+      }
+
+      .top-buttons {
+        display: flex;
+        gap: 20px;
+        margin: auto;
+        margin-bottom: 30px;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 12px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.6);
+        color: #64748b;
+        font-weight: 600;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tab-btn:hover {
+        border-color: rgba(0, 0, 0, 0.12);
+        background: white;
+      }
+
+      .tab-btn::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 4px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 4px 4px 0 0;
+      }
+      .tab-btn[data-target="orders"]::before {
+        background: linear-gradient(135deg, #fbcbdb, #f7b5c3);
+      }
+      .tab-btn[data-target="packaged"]::before {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+      .tab-btn[data-target="done"]::before {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+
+      .tab-btn.active {
+        background: white;
+        color: #1e293b;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+        transform: translateY(-4px);
+      }
+
+      .tab-btn.active::before {
+        width: 60%;
+      }
+
+      .content-area {
+        position: relative;
+      }
+
+      .content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+        height: 400px;
+        overflow-y: auto;
+
+        opacity: 0;
+        transform: translateX(40px) scale(0.98);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: absolute;
+        width: 100%;
+        pointer-events: none;
+      }
+
+      .content.active {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        position: relative;
+        pointer-events: auto;
+      }
+
+      .order-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 15px;
+        margin-bottom: 15px;
+
+        border-radius: 10px;
+        background: #f9f9ff;
+        border: 1px solid #eee;
+
+        transition: 0.25s;
+      }
+
+      .order-card:hover {
+        transform: scale(1.02);
+      }
+
+      .order-info h3 {
+        margin: 0;
+      }
+
+      .order-info p {
+        margin: 4px 0 0;
+        color: #666;
+      }
+
+      .order-side {
+        text-align: right;
+      }
+
+      .price {
+        font-weight: 800;
+        color: var(--roma-accent, #717fe0);
+        font-size: 1.1rem;
+      }
+
+      /* Mobile UI Refinements */
+      @media (max-width: 600px) {
+        .welcome h1 {
+          font-size: 1.8rem !important;
+          margin-top: 30px;
+        }
+        .top-buttons {
+          flex-direction: row;
+          gap: 8px;
+          margin-bottom: 25px;
+        }
+        .tab-btn {
+          padding: 10px 5px;
+          font-size: 0.85rem;
+        }
+        .order-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+          padding: 15px;
+        }
+        .order-side {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 10px;
+          border-top: 1px solid #eee;
+        }
+        .price {
+          font-size: 1rem;
+        }
+        .btn-status {
+          padding: 5px 10px;
+          font-size: 0.8rem;
+        }
+      }
+
+      .btn {
+        border: none;
+        padding: 5px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .package {
+        background: #f59e0b;
+        color: white;
+      }
+
+      .done {
+        background: #22c55e;
+        color: white;
+      }
+
+      .content::-webkit-scrollbar {
+        width: 8px;
+        height: 5px;
+      }
+
+      .content::-webkit-scrollbar-thumb {
+        background: #fbcbdb;
+        border-radius: 20px;
+      }
+
+      /* NEW FLY ANIMATION */
+      @keyframes flyUpOut {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        30% {
+          transform: scale(1.05);
+          opacity: 1;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        100% {
+          transform: translate(150px, -200px) scale(0.2);
+          opacity: 0;
+        }
+      }
+      .fly-out {
+        animation: flyUpOut 0.6s cubic-bezier(0.5, 0, 0.1, 1) forwards;
+        pointer-events: none;
+        position: relative;
+        z-index: 100;
+      }
+
+      /* PROFESSIONAL MANAGE BUTTONS */
+      .manage-btn {
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 700;
+        border: none;
+        color: white !important;
+        text-decoration: none !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Cairo", sans-serif;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 1.05rem;
+      }
+      .manage-btn:hover {
+        transform: translateY(-3px);
+      }
+      .manage-return {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25);
+      }
+      .manage-return:hover {
+        box-shadow: 0 14px 28px rgba(239, 68, 68, 0.4);
+      }
+      .manage-shipping {
+        background: linear-gradient(135deg, #f7b5c3, #fbcbdb);
+        box-shadow: 0 8px 20px rgba(251, 203, 219, 0.25);
+      }
+      .manage-shipping:hover {
+        box-shadow: 0 14px 28px rgba(251, 203, 219, 0.4);
+      }
+      .manage-analysis {
+        background: linear-gradient(135deg, #6366f1, #4338ca);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+      }
+      .manage-analysis:hover {
+        box-shadow: 0 14px 28px rgba(99, 102, 241, 0.4);
+      }
+
+      /* Premium Order Card Buttons */
+      .order-btn {
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 700;
+        font-family: "Cairo", sans-serif;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: white !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .order-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+      }
+
+      .order-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .order-btn.btn-shipped {
+        background: linear-gradient(
+          135deg,
+          #ffb75e,
+          #ed8f03
+        ); /* Amber/Sunset */
+        box-shadow: 0 6px 15px rgba(237, 143, 3, 0.25);
+      }
+
+      .order-btn.btn-delivered {
+        background: linear-gradient(
+          135deg,
+          #42e695,
+          #3bb2b8
+        ); /* Emerald/Teal */
+        box-shadow: 0 6px 15px rgba(59, 178, 184, 0.25);
+      }
+
+      .order-btn.btn-returned {
+        background: linear-gradient(135deg, #ff5f6d, #ffc371); /* Rose/Orange */
+        box-shadow: 0 6px 15px rgba(255, 95, 109, 0.25);
+      }
+
+      .order-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(251, 203, 219, 0.2);
+        box-shadow: 0 8px 20px rgba(251, 203, 219, 0.1);
+        border-radius: 20px;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      .order-card:hover {
+        background: #fff;
+        border-color: var(--roma-accent);
+        box-shadow: 0 15px 35px rgba(251, 203, 219, 0.3);
+        transform: translateY(-5px);
+      }
+      .welcome {
+        text-align: center;
+        margin: 0 auto;
+        position: relative;
+        top: 50px;
+      }
+      .order-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s;
+        z-index: 9999;
+      }
+
+      .order-modal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .order-modal-content {
+        background: white;
+        width: 600px;
+        max-width: 95%;
+        border-radius: 16px;
+        padding: 30px;
+
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        position: relative;
+
+        max-height: 80vh;
+        overflow-y: auto;
+
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+        overflow-y: overlay;
+      }
+
+      /* Chrome / Edge / Safari */
+      .order-modal-content::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .order-modal-content::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 12px; /* keeps it inside the rounded borders */
+      }
+
+      .order-modal-content::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+      }
+
+      .order-modal-content::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      @keyframes modalPop {
+        from {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+
+        border: none;
+        background: #eee;
+
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .modal-close:hover {
+        background: #dddddd;
+      }
+
+      .modal-header {
+        margin-bottom: 20px;
+      }
+
+      .modal-header h2 {
+        margin: 0;
+      }
+
+      .order-date {
+        color: #777;
+        font-size: 14px;
+      }
+
+      .modal-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .info-box {
+        background: #f8f9ff;
+        padding: 12px;
+        border-radius: 10px;
+      }
+
+      .info-box label {
+        font-size: 12px;
+        color: #777;
+      }
+
+      .info-box p {
+        margin: 4px 0 0;
+        font-weight: 500;
+      }
+
+      .message-box {
+        background: #f8f9ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .items-box {
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+      }
+      .order-modal-content::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .order-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        background: #f8f9ff;
+        padding: 12px;
+        border-radius: 12px;
+
+        margin-bottom: 12px;
+
+        transition: 0.2s;
+      }
+
+      .order-item:hover {
+        transform: scale(1.01);
+        background: #f2f4ff;
+      }
+
+      .item-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .item-info {
+        flex: 1;
+      }
+
+      .item-name {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .item-meta {
+        margin-top: 4px;
+        font-size: 13px;
+        color: #666;
+        display: flex;
+        gap: 10px;
+      }
+
+      .item-meta span {
+        background: #eef1ff;
+        padding: 3px 8px;
+        border-radius: 6px;
+      }
+
+      .item-amount {
+        font-weight: 600;
+        font-size: 15px;
+        color: #f7b5c3;
+      }
+      .order-item {
+        border: 1px solid #eef0ff;
+      }
+    </style>
+  </head>
+
+  <body>
+    {% include 'header.html' %} {% if current_user.is_authenticated %}
+    <div class="welcome">
+      <h1>مرحبا بعودتك, {{ current_user.name.capitalize() }}</h1>
+    </div>
+    {% endif %}
+
+    <!-- 🖼️ Image Zoom Modal -->
+    <style>
+      .zoom-layer {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 100000;
+        cursor: zoom-out;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        backdrop-filter: blur(8px);
+      }
+      .zoom-layer.active {
+        display: flex;
+        opacity: 1;
+      }
+      .zoom-img-container {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+        transform: scale(0.5);
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Circular reveal effect */
+        clip-path: circle(0% at 50% 50%);
+      }
+      .zoom-layer.active .zoom-img-container {
+        transform: scale(1);
+        clip-path: circle(100% at 50% 50%);
+      }
+      .zoom-img {
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 12px;
+        box-shadow: 0 0 50px rgba(251, 203, 219, 0.3);
+      }
+      .zoom-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: 0.3s;
+      }
+      .zoom-close:hover {
+        opacity: 1;
+        transform: rotate(90deg);
+      }
+      /* Hover cursor on dashboard images */
+      .item-image img {
+        cursor: zoom-in;
+        transition: transform 0.3s ease;
+      }
+      .item-image img:hover {
+        transform: scale(1.05);
+      }
+    </style>
+
+    <div class="zoom-layer" id="zoomLayer">
+      <span class="zoom-close">&times;</span>
+      <div class="zoom-img-container">
+        <img src="" class="zoom-img" id="zoomImg" />
+      </div>
+    </div>
+
+    <div class="dashboard">
+      <div
+        style="
+          display: flex;
+          justify-content: flex-start;
+          margin-bottom: 25px;
+          gap: 15px;
+        "
+      >
+        <!-- <a href="/admin/returns" class="manage-btn manage-return">
+          <i class="fa fa-undo"></i> Manage Returns
+        </a> -->
+        <a href="/admin/shipping" class="manage-btn manage-shipping">
+          <i class="fa fa-truck"></i>إداره أسعار الشحن
+        </a>
+        <!-- <a
+          href="{{ url_for('admin_analysis') }}"
+          class="manage-btn manage-analysis"
+        >
+          <i class="fa fa-line-chart"></i> Business Insights
+        </a> -->
+      </div>
+      <div class="top-buttons">
+        <button
+          class="tab-btn active"
+          data-target="orders"
+          onclick="getOrders('order')"
+        >
+          الطلبات
+        </button>
+        <button
+          class="tab-btn"
+          data-target="packaged"
+          onclick="getOrders('packaged')"
+        >
+          تم الشحن
+        </button>
+        <button class="tab-btn" data-target="done" onclick="getOrders('done')">
+          تم التوصيل
+        </button>
+      </div>
+
+      <div class="content-area">
+        <div class="content active" id="orders"></div>
+        <div class="content" id="packaged"></div>
+        <div class="content" id="done">
+          <p>جميع الطلبات تظهر هنا.</p>
+        </div>
+      </div>
+    </div>
+    <!-- display order data -->
+    <div id="orderModal" class="order-modal">
+      <div class="order-modal-content">
+        <button class="modal-close" id="closeModal">&times;</button>
+
+        <div class="modal-header">
+          <h2 id="customerName">أسم العميل</h2>
+          <span class="order-date" id="orderDate">12 Mar 2026</span>
+        </div>
+
+        <div class="modal-info-grid">
+          <div class="info-box">
+            <label>رقم الهاتف</label>
+            <p id="customerPhone">+20 000000000</p>
+          </div>
+
+          <div class="info-box">
+            <label>City</label>
+            <p
+              id="customerCity"
+              style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+            >
+              Cairo
+            </p>
+          </div>
+
+          <div class="info-box">
+            <label>العنوان</label>
+            <p
+              id="customerAddress"
+              style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+            >
+              Street name here
+            </p>
+          </div>
+
+          <div class="info-box">
+            <label>رقم الهاتف</label>
+            <p id="customerSecondPhone">Extra info</p>
+          </div>
+        </div>
+
+        <div class="message-box">
+          <label>رسالة العميل </label>
+          <p
+            id="customerMessage"
+            style="font-family: &quot;Cairo&quot;, &quot;sans-serif&quot;"
+          >
+            رساله من العميل...
+          </p>
+        </div>
+
+        <div class="items-box">
+          <h3>المنتجات</h3>
+          <div id="orderedItems"></div>
+        </div>
+      </div>
+    </div>
+    {% include 'footer.html' %}
+
+    <!-- JS Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/animsition/js/animsition.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/slick/slick.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slick-custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/parallax100/parallax100.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/MagnificPopup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+      // Initialize parallax
+      $(".parallax100").parallax100();
+
+      // Tab switching
+      const buttons = document.querySelectorAll(".tab-btn");
+      const contents = document.querySelectorAll(".content");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          contents.forEach((c) => c.classList.remove("active"));
+          document.getElementById(btn.dataset.target).classList.add("active");
+        });
+      });
+
+      const ordersContainer = document.getElementById("orders");
+      const packagedContainer = document.getElementById("packaged");
+      const doneContainer = document.getElementById("done");
+
+      function createOrder(order) {
+        const itemsText = order.ordered_items
+          .map((i) => `${i.amount}x ${i.name}`)
+          .join(" - ");
+
+        const total = order.total_price;
+
+        const card = document.createElement("div");
+        card.className = "order-card";
+        card.dataset.id = order.id;
+        card.onclick = function (e) {
+          if (!e.target.closest("button")) {
+            // check if the clicked element is NOT inside a button
+            myFunction(this.dataset.id);
+          }
+        };
+        card.innerHTML = `
+          <div class="order-info">
+            <a role="button">
+              <h3 style="font-family:  'Cairo', 'sans-serif';">${order.username}</h3>
+              <p style="font-family:  'Cairo', 'sans-serif';">${itemsText}</p>
+            </a>
+          </div>
+          <div class="order-side">
+            <span class="price">${total} E£</span>
+          </div>
+        `;
+
+        if (order.state === "order") {
+          const btn = document.createElement("button");
+          btn.className = "order-btn btn-shipped";
+          btn.innerHTML = `<i class="fa fa-truck"></i> تم الشحن`;
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            card.classList.add("fly-out");
+            setTimeout(() => {
+              updateOrderState(order.id, "packaged");
+            }, 550);
+          };
+          card.querySelector(".order-side").appendChild(btn);
+        }
+
+        if (order.state === "packaged") {
+          const btn = document.createElement("button");
+          btn.className = "order-btn btn-delivered";
+          btn.innerHTML = `<i class="fa fa-check"></i> تم التوصيل`;
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            card.classList.add("fly-out");
+            setTimeout(() => {
+              updateOrderState(order.id, "done");
+            }, 550);
+          };
+          card.querySelector(".order-side").appendChild(btn);
+        }
+
+        // if (order.state === "packaged" || order.state === "done") {
+        //   const btnReturned = document.createElement("button");
+        //   btnReturned.className = "order-btn btn-returned";
+        //   btnReturned.innerHTML = `<i class="fa fa-undo"></i> Returned`;
+        //   btnReturned.style.marginLeft = "12px";
+
+        //   btnReturned.onclick = (e) => {
+        //     e.stopPropagation();
+        //     card.classList.add("fly-out");
+        //     setTimeout(() => {
+        //       updateOrderState(order.id, "returned");
+        //     }, 550);
+        //   };
+        //   card.querySelector(".order-side").appendChild(btnReturned);
+        // }
+
+        return card;
+      }
+
+      function updateOrderState(id, newState) {
+        $.post("/update-order-state", { id, state: newState }, () => {
+          getOrders("order");
+          getOrders("packaged");
+          getOrders("done");
+        });
+      }
+
+      function getOrders(state) {
+        let container =
+          state === "order"
+            ? ordersContainer
+            : state === "packaged"
+              ? packagedContainer
+              : doneContainer;
+        container.innerHTML = "";
+
+        $.post("/get-orders", { state }, function (response) {
+          response.orders.forEach((order) =>
+            container.appendChild(createOrder(order)),
+          );
+        });
+      }
+
+      window.onload = () => {
+        getOrders("order");
+        getOrders("packaged");
+        getOrders("done");
+      };
+
+      //onclick the card of the item
+
+      function myFunction(id) {
+        $.ajax({
+          url: "/get-order-data",
+          method: "POST",
+
+          data: { id: id },
+          success: function (data) {
+            const modal = document.getElementById("orderModal");
+            const closeModal = document.getElementById("closeModal");
+            document.getElementById("customerName").textContent = data.username;
+            document.getElementById("customerPhone").textContent =
+              data.first_number;
+            document.getElementById("customerCity").textContent = data.city;
+            document.getElementById("customerAddress").textContent =
+              data.adress;
+            document.getElementById("orderDate").textContent = data.created_at;
+            document.getElementById("customerSecondPhone").textContent =
+              data.second_number;
+            document.getElementById("orderedItems").innerHTML = "";
+            data.ordered_items.forEach(function (item) {
+              let cartElement = `
+                	<div class="order-item">
+						<div class="item-image" onclick="zoomImage('${item.img}')">
+							<img src="${item.img}">
+						</div>
+ 
+						<div class="item-info">
+							<h4 class="item-name" style="font-family:  'Cairo', 'sans-serif';">${item.name}</h4>
+							<div class="item-meta">
+								<span style="font-family:  'Cairo', 'sans-serif';">${item.color}</span>
+							</div>
+						</div>
+ 
+						<div class="item-amount">x${item.amount}</div>
+					</div>
+                `;
+              document
+                .getElementById("orderedItems")
+                .insertAdjacentHTML("beforeend", cartElement);
+            });
+
+            modal.classList.add("active");
+            closeModal.onclick = () => modal.classList.remove("active");
+            modal.addEventListener("click", function (e) {
+              if (e.target === modal) {
+                modal.classList.remove("active");
+              }
+            });
+          },
+        });
+      }
+
+      function zoomImage(src) {
+        const layer = document.getElementById("zoomLayer");
+        const img = document.getElementById("zoomImg");
+        img.src = src;
+        layer.classList.add("active");
+
+        const close = () => layer.classList.remove("active");
+        layer.onclick = close;
+        document.querySelector(".zoom-close").onclick = close;
+      }
+    </script>
+  </body>
+</html>

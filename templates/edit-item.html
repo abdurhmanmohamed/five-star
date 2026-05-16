@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Edit Product | Romaire Boutique</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/icons/favicon.png') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Outfit:wght@400;600;800&family=Quicksand:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/roma-theme.css') }}"
+    />
+
+    <style>
+      body {
+        background: #fffbfc;
+        font-family: var(--font-body, "Quicksand", sans-serif);
+        min-height: 100vh;
+      }
+
+      .edit-hero {
+        padding: 120px 0 40px;
+        background: linear-gradient(to bottom, #fdf6f7, #fff);
+        text-align: center;
+      }
+
+      .edit-hero h2 {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 2.8rem;
+        color: var(--roma-text);
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+      }
+
+      .main-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px 100px;
+      }
+
+      .back-nav {
+        margin-bottom: 35px;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .btn-roma-soft {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: #a09295;
+        font-weight: 800;
+        font-size: 0.9rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 12px 24px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid rgba(251, 203, 219, 0.2);
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(251, 203, 219, 0.1);
+      }
+
+      .btn-roma-soft:hover {
+        color: var(--roma-accent);
+        transform: translateX(-8px);
+        box-shadow: 0 8px 25px rgba(251, 203, 219, 0.25);
+        border-color: var(--roma-accent);
+      }
+
+      /* Glassmorphism Card */
+      .roma-glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(15px);
+        border-radius: 35px;
+        border: 1px solid rgba(251, 203, 219, 0.4);
+        box-shadow: 0 25px 60px rgba(251, 203, 219, 0.15);
+        padding: 50px;
+      }
+
+      .edit-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+      }
+
+      @media (max-width: 900px) {
+        .edit-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Image Section */
+      .main-img-wrap {
+        position: relative;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+      }
+
+      #mainImage {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .thumb-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .thumb-wrapper {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      .thumb-wrapper.active {
+        border-color: var(--roma-accent);
+      }
+
+      .thumb-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .delete-btn-img {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(255, 77, 77, 0.9);
+        color: white;
+        border: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: 0.3s ease;
+      }
+
+      .thumb-wrapper:hover .delete-btn-img {
+        opacity: 1;
+      }
+
+      .upload-btn-wrap {
+        margin-top: 25px;
+      }
+
+      .btn-upload {
+        width: 100%;
+        padding: 15px;
+        border: 2px dashed rgba(251, 203, 219, 0.6);
+        background: #fffbfc;
+        border-radius: 20px;
+        color: #a09295;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .btn-upload:hover {
+        border-color: var(--roma-accent);
+        background: #fff;
+        color: var(--roma-text);
+      }
+
+      /* Form Fields */
+      .roma-field {
+        margin-bottom: 25px;
+      }
+
+      .roma-field label {
+        display: block;
+        font-weight: 800;
+        color: var(--roma-text);
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        font-family: var(--font-heading);
+      }
+
+      .roma-input {
+        width: 100%;
+        padding: 16px 22px;
+        background: #fff;
+        border: 1.5px solid rgba(251, 203, 219, 0.4);
+        border-radius: 20px;
+        outline: none;
+        font-family: "Quicksand";
+        transition: 0.3s ease;
+      }
+
+      .roma-input:focus {
+        border-color: var(--roma-accent);
+        box-shadow: 0 10px 25px rgba(251, 203, 219, 0.2);
+      }
+
+      .btn-roma-save {
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--roma-primary),
+          var(--roma-primary-hover)
+        );
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: 800;
+        font-size: 1.1rem;
+        font-family: var(--font-heading);
+        box-shadow: 0 15px 35px rgba(251, 203, 219, 0.4);
+        transition: all 0.4s ease;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .btn-roma-save:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 45px rgba(251, 203, 219, 0.5);
+      }
+
+      @media (max-width: 600px) {
+        .roma-glass-card {
+          padding: 30px 20px;
+        }
+        .edit-hero h2 {
+          font-size: 2rem;
+        }
+        #mainImage {
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body class="animsition">
+    {% include "header.html" %}
+
+    <div class="edit-hero">
+      <div class="container">
+        <span
+          class="badge rounded-pill mb-3"
+          style="
+            background: rgba(251, 203, 219, 0.3);
+            color: var(--roma-accent);
+            padding: 8px 18px;
+            font-weight: 800;
+          "
+          >Inventory Admin</span
+        >
+        <h2>Edit Boutique Item</h2>
+        <p>Refine your product's story and aesthetic presentation.</p>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div class="back-nav">
+        <a href="/dashboard" class="btn-roma-soft">
+          <i class="fa fa-chevron-left"></i>
+          <span>Back to Dashboard</span>
+        </a>
+      </div>
+
+      <div class="roma-glass-card">
+        <div class="edit-grid">
+          <!-- Media Section -->
+          <div class="media-section">
+            <div class="main-img-wrap">
+              <img
+                id="mainImage"
+                src="{{ item.item_imgs[0].img if item.item_imgs|length > 0 else '' }}"
+                alt="Product Image"
+              />
+            </div>
+
+            <label
+              class="fw-bold text-muted small mb-3 d-block uppercase tracking-wider"
+              >Image Gallery</label
+            >
+            <div class="thumb-container" id="thumbContainer">
+              {% for img in item.item_imgs %}
+              <div class="thumb-wrapper">
+                <img
+                  src="{{img.img}}"
+                  onclick="setMain('{{img.img}}')"
+                  alt="Thumbnail"
+                />
+                <button
+                  class="delete-btn-img"
+                  onclick="deleteOldImage('{{img.id}}', this)"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="upload-btn-wrap">
+              <input type="file" id="newImages" multiple hidden />
+              <label for="newImages" class="btn-upload">
+                <i class="fa fa-plus-circle"></i>
+                <span>Upload New Images</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Fields Section -->
+          <div class="fields-section">
+            <div class="roma-field">
+              <label>Product Name</label>
+              <input
+                id="n"
+                class="roma-input"
+                value="{{item.name}}"
+                placeholder="Enter product name..."
+                style="font-family: &quot;Cairo&quot;; text-align: right"
+              />
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="roma-field">
+                  <label>Sale Price (E£)</label>
+                  <input
+                    id="price"
+                    class="roma-input"
+                    value="{{item.price}}"
+                    placeholder="0.00"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="roma-field">
+                  <label>Original Price (E£)</label>
+                  <input
+                    id="old_price"
+                    class="roma-input"
+                    value="{{item.old_price if item.old_price else ''}}"
+                    placeholder="Optional"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="roma-field">
+              <label>Discount Label</label>
+              <input
+                id="discount_label"
+                class="roma-input"
+                value="{{item.discount_label if item.discount_label else ''}}"
+                placeholder="e.g. 20% OFF or Hot Choice"
+                style="font-family: &quot;Cairo&quot;; text-align: right"
+              />
+            </div>
+
+            <div class="roma-field">
+              <label>Product Category</label>
+              <select
+                id="category"
+                class="roma-input"
+                style="font-family: &quot;Cairo&quot;"
+              >
+                <option value="">-- اختر القسم --</option>
+                <option value="women" {% if item.category == "women" %}selected{% endif %}>👩 حريمي</option>
+                <option value="men" {% if item.category == "men" %}selected{% endif %}>👨 رجالي</option>
+                <option value="kids" {% if item.category == "kids" %}selected{% endif %}>👶 أطفال</option>
+                <option value="accessories" {% if item.category == "accessories" %}selected{% endif %}>👜 أكسسوارات</option>
+                <option value="hot" {% if item.category == "hot" %}selected{% endif %}>🔥 عروض ساخنة</option>
+                <option value="top" {% if item.category == "top" %}selected{% endif %}>🌟 الأكثر مبيعاً</option>
+              </select>
+            </div>
+
+            <div class="roma-field">
+              <label>Product Narrative (Description)</label>
+              <textarea
+                id="desc"
+                class="roma-input"
+                rows="6"
+                style="
+                  font-family: &quot;Cairo&quot;;
+                  text-align: right;
+                  resize: none;
+                "
+              >
+{{item.description}}</textarea
+              >
+            </div>
+
+            <div class="roma-field">
+              <label>Product Colors</label>
+              <div id="colorContainer" class="d-flex flex-wrap gap-2 mb-3">
+                {% for color in item.item_colors %}
+                <span
+                  class="badge bg-dark p-2 rounded-3 d-flex align-items-center gap-2"
+                  style="font-family: &quot;Cairo&quot;"
+                >
+                  <span class="color-label">{{ color.color }}</span>
+                  <i
+                    class="fa fa-times cursor-pointer"
+                    onclick="this.parentElement.remove()"
+                    style="cursor: pointer"
+                  ></i>
+                </span>
+                {% endfor %}
+              </div>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="newColor"
+                  class="roma-input"
+                  style="
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    flex: 1;
+                  "
+                  placeholder="Add new shade/color..."
+                />
+                <button
+                  class="btn btn-dark px-4"
+                  id="addColorBtn"
+                  type="button"
+                  style="
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    border-radius: 0 20px 20px 0;
+                  "
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <div class="roma-field">
+              <label>Product Sizes</label>
+              <div id="sizeContainer" class="d-flex flex-wrap gap-2 mb-3">
+                {% for s in item.item_sizes %}
+                <span
+                  class="badge bg-secondary p-2 rounded-3 d-flex align-items-center gap-2"
+                  style="font-family: &quot;Cairo&quot;"
+                >
+                  <span class="size-label">{{ s.size }}</span>
+                  <i
+                    class="fa fa-times cursor-pointer"
+                    onclick="this.parentElement.remove()"
+                    style="cursor: pointer"
+                  ></i>
+                </span>
+                {% endfor %}
+              </div>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="newSize"
+                  class="roma-input"
+                  style="
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    flex: 1;
+                  "
+                  placeholder="Add size (e.g. XL, 42)..."
+                />
+                <button
+                  class="btn btn-dark px-4"
+                  id="addSizeBtn"
+                  type="button"
+                  style="
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    border-radius: 0 20px 20px 0;
+                  "
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <button class="btn-roma-save" onclick="saveEdit('{{item.id}}')">
+              <i class="fa fa-save me-2"></i> Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- JS Handling -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script>
+      let addedImagesData = [];
+
+      function setMain(src) {
+        document.getElementById("mainImage").src = src;
+      }
+
+      function deleteOldImage(id, el) {
+        if (confirm("Are you sure you want to delete this image?")) {
+          fetch(`/admin/delete-image/${id}`, { method: "POST" })
+            .then((res) => res.json())
+            .then(() => {
+              el.closest(".thumb-wrapper").style.opacity = "0";
+              setTimeout(() => el.closest(".thumb-wrapper").remove(), 300);
+            });
+        }
+      }
+
+      document
+        .getElementById("newImages")
+        .addEventListener("change", function () {
+          [...this.files].forEach((file) => {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              const imageData = e.target.result;
+              addedImagesData.push(imageData);
+
+              let div = document.createElement("div");
+              div.className = "thumb-wrapper";
+              div.innerHTML = `
+                        <img src="${imageData}">
+                        <button class="delete-btn-img" onclick="removeNewImage(this)" style="opacity: 1;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    `;
+              document.getElementById("thumbContainer").appendChild(div);
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+
+      function removeNewImage(btn) {
+        const wrapper = btn.closest(".thumb-wrapper");
+        const src = wrapper.querySelector("img").src;
+        addedImagesData = addedImagesData.filter((img) => img !== src);
+        wrapper.remove();
+      }
+
+      function saveEdit(id) {
+        const btn = document.querySelector(".btn-roma-save");
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Saving...';
+        btn.disabled = true;
+
+        const colorElements = document
+          .getElementById("colorContainer")
+          .querySelectorAll("span.badge");
+        const colors = Array.from(colorElements)
+          .map((el) => {
+            const labelEl = el.querySelector(".color-label");
+            return labelEl ? labelEl.textContent.trim() : el.textContent.trim();
+          })
+          .filter(Boolean);
+
+        const sizeElements = document
+          .getElementById("sizeContainer")
+          .querySelectorAll("span.badge");
+        const sizes = Array.from(sizeElements)
+          .map((el) => {
+            const labelEl = el.querySelector(".size-label");
+            return labelEl ? labelEl.textContent.trim() : el.textContent.trim();
+          })
+          .filter(Boolean);
+
+        const data = {
+          n: document.getElementById("n").value,
+          price: document.getElementById("price").value,
+          old_price: document.getElementById("old_price").value,
+          discount_label: document.getElementById("discount_label").value,
+          description: document.getElementById("desc").value,
+          category: document.getElementById("category").value,
+          images: addedImagesData,
+          colors: colors,
+          sizes: sizes,
+        };
+
+        fetch(`/admin/update-item/${id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((res) => {
+            if (res.ok) {
+              window.location.href = "/dashboard";
+            } else {
+              alert("Failed to update item.");
+              btn.innerHTML = '<i class="fa fa-save me-2"></i> Save Changes';
+              btn.disabled = false;
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("An error occurred.");
+            btn.innerHTML = '<i class="fa fa-save me-2"></i> Save Changes';
+            btn.disabled = false;
+          });
+      }
+
+      document
+        .getElementById("addColorBtn")
+        .addEventListener("click", function () {
+          const input = document.getElementById("newColor");
+          const val = input.value.trim();
+          if (!val) return;
+
+          const span = document.createElement("span");
+          span.className =
+            "badge bg-dark p-2 rounded-3 d-flex align-items-center gap-2";
+          span.style.fontFamily = "Cairo";
+          span.innerHTML = `
+                <span class="color-label">${val}</span>
+                <i class="fa fa-times cursor-pointer" onclick="this.parentElement.remove()" style="cursor:pointer"></i>
+            `;
+          document.getElementById("colorContainer").appendChild(span);
+          input.value = "";
+        });
+
+      document
+        .getElementById("newColor")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("addColorBtn").click();
+          }
+        });
+
+      document
+        .getElementById("addSizeBtn")
+        .addEventListener("click", function () {
+          const input = document.getElementById("newSize");
+          const val = input.value.trim();
+          if (!val) return;
+
+          const span = document.createElement("span");
+          span.className =
+            "badge bg-secondary p-2 rounded-3 d-flex align-items-center gap-2";
+          span.style.fontFamily = "Cairo";
+          span.innerHTML = `
+                <span class="size-label">${val}</span>
+                <i class="fa fa-times cursor-pointer" onclick="this.parentElement.remove()" style="cursor:pointer"></i>
+            `;
+          document.getElementById("sizeContainer").appendChild(span);
+          input.value = "";
+        });
+
+      document
+        .getElementById("newSize")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("addSizeBtn").click();
+          }
+        });
+    </script>
+  </body>
+</html>

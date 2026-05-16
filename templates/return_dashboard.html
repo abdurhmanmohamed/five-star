@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Returns & Settlements | Romaire Boutique</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/icons/favicon.png') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Outfit:wght@400;600;800&family=Quicksand:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/roma-theme.css') }}"
+    />
+
+    <style>
+      body {
+        background: #fffbfc;
+        font-family: var(--font-body, "Quicksand", sans-serif);
+        min-height: 100vh;
+      }
+
+      .dashboard-hero {
+        padding: 120px 0 40px;
+        background: linear-gradient(to bottom, #fdf6f7, #fff);
+        text-align: center;
+      }
+
+      .dashboard-hero h2 {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 2.8rem;
+        color: var(--roma-text);
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+      }
+
+      .dashboard-hero p {
+        color: #a09295;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      .main-dashboard {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px 100px;
+      }
+
+      /* Top Nav Bar */
+      .admin-nav-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+      }
+
+      .btn-roma-soft {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: #a09295;
+        font-weight: 800;
+        padding: 12px 24px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid rgba(251, 203, 219, 0.2);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(251, 203, 219, 0.1);
+      }
+
+      .btn-roma-soft:hover {
+        color: var(--roma-accent);
+        background: #fff;
+        transform: translateX(-8px);
+        box-shadow: 0 8px 25px rgba(251, 203, 219, 0.25);
+        border-color: var(--roma-accent);
+      }
+
+      .btn-roma-accent {
+        background: linear-gradient(
+          135deg,
+          var(--roma-primary),
+          var(--roma-primary-hover)
+        );
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 18px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 8px 20px rgba(251, 203, 219, 0.3);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-roma-accent:hover {
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(251, 203, 219, 0.4);
+      }
+
+      /* Tabs Styling */
+      .roma-tabs {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        background: rgba(251, 203, 219, 0.1);
+        padding: 8px;
+        border-radius: 20px;
+      }
+
+      .roma-tab-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 14px;
+        border-radius: 16px;
+        font-weight: 800;
+        color: #b0a4a7;
+        font-family: var(--font-heading);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+        letter-spacing: 0.5px;
+      }
+
+      .roma-tab-btn.active {
+        background: white;
+        color: var(--roma-text);
+        box-shadow: 0 10px 25px rgba(251, 203, 219, 0.2);
+        transform: translateY(-2px);
+      }
+
+      /* Content Area */
+      .content {
+        display: none;
+        animation: romaFade 0.5s ease;
+      }
+
+      .content.active {
+        display: block;
+      }
+
+      @keyframes romaFade {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Order Cards */
+      .roma-order-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 28px;
+        padding: 28px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(251, 203, 219, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(251, 203, 219, 0.05);
+      }
+
+      .roma-order-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        border-color: var(--roma-accent);
+        box-shadow: 0 20px 45px rgba(251, 203, 219, 0.3);
+        background: #fff;
+      }
+
+      .order-info h3 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        color: var(--roma-text);
+        margin: 0 0 5px;
+      }
+
+      .order-info p {
+        color: #a09295;
+        margin: 0;
+        font-size: 0.95rem;
+        font-family: "Cairo", sans-serif;
+      }
+
+      .order-side {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end;
+      }
+
+      .order-price {
+        font-weight: 800;
+        color: var(--roma-accent);
+        font-size: 1.25rem;
+        background: rgba(251, 203, 219, 0.1);
+        padding: 6px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(251, 203, 219, 0.2);
+      }
+
+      .btn-settle {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 14px;
+        font-weight: 800;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.4s ease;
+        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25);
+      }
+
+      .btn-settle:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        color: white;
+      }
+
+      /* Settlement Specific Fly-out */
+      @keyframes romaFly {
+        to {
+          transform: translate(100px, -100px) scale(0.5);
+          opacity: 0;
+        }
+      }
+      .fly-out {
+        animation: romaFly 0.6s cubic-bezier(0.5, 0, 0, 1) forwards;
+        pointer-events: none;
+      }
+
+      /* Modal Redesign */
+      .roma-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+      }
+
+      .roma-modal.active {
+        display: flex;
+      }
+
+      .roma-modal-content {
+        background: #fff;
+        width: 100%;
+        max-width: 650px;
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        background: #fdf6f7;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--roma-text);
+        transition: all 0.3s ease;
+      }
+
+      .modal-close:hover {
+        background: var(--roma-accent);
+        color: white;
+        transform: rotate(90deg);
+      }
+
+      .modal-badge {
+        display: inline-block;
+        padding: 5px 15px;
+        background: rgba(251, 203, 219, 0.2);
+        color: var(--roma-accent);
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+      }
+
+      /* Mobile Adjustments */
+      @media (max-width: 600px) {
+        .dashboard-hero {
+          padding: 100px 20px 40px;
+        }
+        .dashboard-hero h2 {
+          font-size: 1.8rem;
+        }
+        .admin-nav-bar {
+          flex-direction: column;
+          gap: 15px;
+          align-items: stretch;
+        }
+        .roma-tabs {
+          gap: 8px;
+          padding: 5px;
+        }
+        .roma-tab-btn {
+          padding: 10px;
+          font-size: 0.85rem;
+        }
+        .roma-order-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+          padding: 20px;
+        }
+        .order-side {
+          width: 100%;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 15px;
+          border-top: 1px solid #fdf6f7;
+        }
+        .order-price {
+          font-size: 0.95rem;
+        }
+        .btn-settle {
+          padding: 6px 12px;
+          font-size: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="animsition">
+    {% include "header.html" %}
+
+    <div class="dashboard-hero">
+      <div class="container">
+        <span class="modal-badge">Admin Control</span>
+        <h2>Returns & Settlements</h2>
+        <p>Processing returned merchandise and finalizing settlements.</p>
+      </div>
+    </div>
+
+    <div class="main-dashboard">
+      <div class="admin-nav-bar">
+        <a href="/dashboard" class="btn-roma-soft">
+          <i class="fa fa-chevron-left"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/shipping" class="btn-roma-accent">
+          <i class="fa fa-truck"></i>
+          <span>Manage Shipping</span>
+        </a>
+      </div>
+
+      <div class="roma-tabs">
+        <button
+          class="roma-tab-btn active"
+          data-target="returned"
+          onclick="getOrders('returned')"
+        >
+          Returned Orders
+        </button>
+        <button
+          class="roma-tab-btn"
+          data-target="setteled"
+          onclick="getOrders('setteled')"
+        >
+          Fully Settled
+        </button>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content active" id="returned">
+        <div id="returnedCards">
+          <!-- Data via JS -->
+        </div>
+      </div>
+
+      <div class="content" id="setteled">
+        <div id="setteledCards">
+          <!-- Data via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="roma-modal">
+      <div class="roma-modal-content">
+        <button class="modal-close" id="closeModal">
+          <i class="fa fa-times"></i>
+        </button>
+
+        <div class="modal-header d-block">
+          <span class="modal-badge" id="orderDate">Date</span>
+          <h2
+            id="customerName"
+            class="mt-2"
+            style="font-family: var(--font-heading); font-weight: 800"
+          >
+            Customer Name
+          </h2>
+        </div>
+
+        <div class="row g-3 mt-4">
+          <div class="col-6">
+            <div
+              style="background: #fdf6f7; padding: 15px; border-radius: 15px"
+            >
+              <label class="d-block small fw-bold text-muted mb-1">Phone</label>
+              <p id="customerPhone" class="m-0 fw-bold"></p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div
+              style="background: #fdf6f7; padding: 15px; border-radius: 15px"
+            >
+              <label class="d-block small fw-bold text-muted mb-1">City</label>
+              <p
+                id="customerCity"
+                class="m-0 fw-bold"
+                style="font-family: &quot;Cairo&quot;"
+              ></p>
+            </div>
+          </div>
+          <div class="col-12">
+            <div
+              style="background: #fdf6f7; padding: 15px; border-radius: 15px"
+            >
+              <label class="d-block small fw-bold text-muted mb-1"
+                >Shipping Address</label
+              >
+              <p
+                id="customerAddress"
+                class="m-0 fw-bold"
+                style="font-family: &quot;Cairo&quot;"
+              ></p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-4"
+          style="background: #fdf6f7; padding: 15px; border-radius: 15px"
+        >
+          <label class="d-block small fw-bold text-muted mb-1"
+            >Customer Notes</label
+          >
+          <p
+            id="customerMessage"
+            class="m-0"
+            style="font-family: &quot;Cairo&quot;"
+          ></p>
+        </div>
+
+        <div class="mt-5">
+          <h4
+            style="
+              font-family: var(--font-heading);
+              font-weight: 700;
+              font-size: 1.1rem;
+            "
+            class="mb-3"
+          >
+            Ordered Items
+          </h4>
+          <div id="orderedItems">
+            <!-- Items via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- JS Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/animsition/js/animsition.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/slick/slick.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slick-custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/parallax100/parallax100.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/MagnificPopup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+      // Initialize parallax
+      $(".parallax100").parallax100();
+
+      // Tab switching
+      const buttons = document.querySelectorAll(".roma-tab-btn");
+      const contents = document.querySelectorAll(".content");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          contents.forEach((c) => c.classList.remove("active"));
+          document.getElementById(btn.dataset.target).classList.add("active");
+        });
+      });
+
+      const returnedContainer = document.getElementById("returnedCards");
+      const setteledContainer = document.getElementById("setteledCards");
+
+      function createOrder(order) {
+        const itemsText = order.ordered_items
+          .map((i) => `${i.amount}x ${i.name}`)
+          .join(" - ");
+
+        const total = order.total_price;
+
+        const card = document.createElement("div");
+        card.className = "roma-order-card";
+        card.dataset.id = order.id;
+        card.onclick = function (e) {
+          if (!e.target.closest("button")) {
+            myFunction(this.dataset.id);
+          }
+        };
+        card.innerHTML = `
+          <div class="order-info">
+            <h3 style="font-family: 'Cairo';">${order.username}</h3>
+            <p style="font-family: 'Cairo';">${itemsText}</p>
+          </div>
+          <div class="order-side">
+            <span class="order-price">${total} E£</span>
+          </div>
+        `;
+
+        if (order.state === "returned") {
+          const btn = document.createElement("button");
+          btn.className = "btn-settle";
+          btn.innerHTML = `<i class="fa fa-check-circle-o"></i> Settle Order`;
+
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            card.classList.add("fly-out");
+            setTimeout(() => {
+              updateOrderState(order.id, "setteled");
+            }, 600);
+          };
+
+          card.querySelector(".order-side").appendChild(btn);
+        }
+
+        return card;
+      }
+
+      function updateOrderState(id, newState) {
+        $.post("/update-order-state", { id, state: newState }, () => {
+          getOrders("returned");
+          getOrders("setteled");
+        });
+      }
+
+      function getOrders(state) {
+        let container =
+          state === "returned"
+            ? document.getElementById("returnedCards")
+            : document.getElementById("setteledCards");
+        container.innerHTML = "";
+
+        $.post("/get-orders", { state }, function (response) {
+          response.orders.forEach((order) =>
+            container.appendChild(createOrder(order)),
+          );
+        });
+      }
+
+      window.onload = () => {
+        getOrders("returned");
+        getOrders("setteled");
+      };
+
+      //onclick the card of the item
+
+      function myFunction(id) {
+        $.ajax({
+          url: "/get-order-data",
+          method: "POST",
+
+          data: { id: id },
+          success: function (data) {
+            const modal = document.getElementById("orderModal");
+            const closeModal = document.getElementById("closeModal");
+            document.getElementById("customerName").textContent = data.username;
+            document.getElementById("customerPhone").textContent =
+              data.first_number;
+            document.getElementById("customerCity").textContent = data.city;
+            document.getElementById("customerAddress").textContent =
+              data.adress;
+            document.getElementById("orderDate").textContent = data.created_at;
+            document.getElementById("customerSecondPhone").textContent =
+              data.second_number;
+            document.getElementById("orderedItems").innerHTML = "";
+            data.ordered_items.forEach(function (item) {
+              let cartElement = `
+                	<div class="order-item">
+						<div class="item-image">
+							<img src="${item.img}">
+						</div>
+
+						<div class="item-info">
+							<h4 class="item-name" style="font-family:  'Cairo', 'sans-serif';">${item.name}</h4>
+							<div class="item-meta">
+								<span style="font-family:  'Cairo', 'sans-serif';">${item.color}</span>
+								<span>${item.size}</span>
+							</div>
+						</div>
+
+						<div class="item-amount">x${item.amount}</div>
+					</div>
+                `;
+              document
+                .getElementById("orderedItems")
+                .insertAdjacentHTML("beforeend", cartElement);
+            });
+
+            modal.classList.add("active");
+            closeModal.onclick = () => modal.classList.remove("active");
+            modal.addEventListener("click", function (e) {
+              if (e.target === modal) {
+                modal.classList.remove("active");
+              }
+            });
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

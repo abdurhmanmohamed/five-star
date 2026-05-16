@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اكتمل الطلب | ستبرق</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  body *:lang(ar),
+  body *:lang(arb),
+  body *[dir="rtl"] {
+      font-family: 'Cairo', Arial, sans-serif !important;
+      direction: rtl;}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FDF8EC, #E9D5B1);
+  }
+
+  .thank-card {
+    background: #fff;
+    padding: 50px 35px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated checkmark */
+  .checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 4px solid #4BB543;
+    position: relative;
+    margin-bottom: 25px;
+    animation: scaleUp 0.5s ease forwards;
+  }
+
+  .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 35px;
+    width: 20px;
+    height: 10px;
+    border-left: 4px solid #4BB543;
+    border-bottom: 4px solid #4BB543;
+    transform: rotate(-45deg);
+    transform-origin: bottom left;
+    animation: draw 0.5s 0.5s ease forwards;
+  }
+
+  @keyframes draw {
+    0% { width: 0; height: 0; }
+    100% { width: 20px; height: 10px; }
+  }
+
+  @keyframes scaleUp {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .thank-card h1 {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 12px;
+  }
+
+  .thank-card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #7B1F2A;
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .back-btn:hover {
+    background: #5e1820;
+    transform: translateY(-2px);
+  }
+
+  .back-btn svg {
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    transition: 0.3s;
+  }
+
+  .back-btn:hover svg {
+    transform: translateX(5px);
+  }
+
+  /* Optional: tiny floating circles for extra premium feel */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(123,31,42,0.1);
+    animation: float 6s infinite ease-in-out;
+  }
+
+  .circle:nth-child(1){ width: 60px; height: 60px; top: -30px; left: -30px; animation-delay: 0s; }
+  .circle:nth-child(2){ width: 40px; height: 40px; bottom: -20px; right: -20px; animation-delay: 2s; }
+  .circle:nth-child(3){ width: 25px; height: 25px; top: 10px; right: 50px; animation-delay: 1s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @media (max-width: 480px) {
+    .thank-card {
+      padding: 35px 25px;
+    }
+    .thank-card h1 {
+      font-size: 22px;
+    }
+    .thank-card p {
+      font-size: 14px;
+    }
+    .back-btn {
+      padding: 12px 20px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="thank-card">
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <div class="checkmark"></div>
+  <h1>شكراً لطلبكِ من ستبرق!</h1>
+  <p>تم استلام طلبكِ بنجاح وسنتواصل معكِ قريباً لتأكيد الشحن.</p>
+  <a href="{{url_for('home')}}" class="back-btn">
+    العودة للتسوق
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; transform: rotate(180deg);">
+      <path d="M12 4l1.41 1.41L7.83 11H20v2H7.83l5.58 5.59L12 20l-8-8z"/>
+    </svg>
+  </a>
+</div>
+
+</body>
+</html>

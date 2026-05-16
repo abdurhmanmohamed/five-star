@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <title>سياسة الاستبدال والاسترجاع - ستبرق</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Existing Styles -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/custom.css') }}"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-family: "Cairo", sans-serif;
+        color: #333;
+        text-align: right;
+      }
+
+      .policy-container {
+        padding: 80px 15px;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .policy-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .policy-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .policy-header h1 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 800;
+        color: #111;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+      }
+
+      .policy-header .subtitle {
+        color: #c4301c;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+      }
+
+      .policy-section {
+        margin-bottom: 40px;
+      }
+
+      .policy-section h2 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: #222;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .policy-section h2 i {
+        margin-left: 15px;
+        color: #c4301c;
+        width: 30px;
+        text-align: center;
+      }
+
+      .policy-content {
+        padding-right: 45px;
+      }
+
+      .policy-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .policy-list li {
+        margin-bottom: 12px;
+        position: relative;
+        padding-right: 20px;
+        line-height: 1.6;
+      }
+
+      .policy-list li::before {
+        content: "•";
+        color: #c4301c;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-right: -1em;
+      }
+
+      .policy-step {
+        display: flex;
+        margin-bottom: 20px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+        border-right: 4px solid #c4301c;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+      }
+
+      .step-number {
+        font-weight: 800;
+        color: #c4301c;
+        font-size: 1.2rem;
+        margin-left: 20px;
+        min-width: 25px;
+      }
+
+      .contact-box {
+        background: #f0f7ff;
+        border-radius: 12px;
+        padding: 25px;
+        margin-top: 50px;
+        border: 1px solid #d0e6ff;
+        text-align: center;
+      }
+
+      .contact-box strong {
+        color: #c4301c;
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 600px) {
+        .policy-card {
+          padding: 30px 20px;
+        }
+        .policy-header h1 {
+          font-size: 1.8rem;
+        }
+        .policy-content {
+          padding-right: 0;
+        }
+      }
+
+      .back-home-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #111;
+        color: #fff;
+        padding: 8px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-family: "Cairo", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .back-home-btn i {
+        margin-left: 8px;
+        font-size: 1.1rem;
+      }
+
+      .back-home-btn:hover {
+        background: #c4301c;
+        color: #fff;
+        transform: scale(1.1) rotate(2deg);
+      }
+    </style>
+  </head>
+  <body class="animsition">
+    <a href="/" class="back-home-btn">
+      <i class="fa fa-long-arrow-right"></i>
+      <span>العودة للرئيسية</span>
+    </a>
+
+    <div class="policy-container">
+      <div class="policy-card">
+        <div class="policy-header">
+          <div class="subtitle">خدمة العملاء</div>
+          <h1>سياسة الاستبدال والاسترجاع</h1>
+          <p>
+            نحن في
+            <strong>ستبرق</strong>
+            نهتم برضاكِ التام عن مشترياتكِ.
+          </p>
+        </div>
+
+        <!-- SECTION 1 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-check-circle"></i> 1. شروط الاسترجاع</h2>
+          <div class="policy-content">
+            <ul class="policy-list">
+              <li>
+                <strong>المدة الزمنية:</strong> نقبل الاسترجاع خلال 10 أيام من
+                تاريخ الشراء.
+              </li>
+              <li>
+                <strong>الحالة:</strong> يجب أن يكون المنتج غير مستخدم، غير
+                تالف، وبكامل ملحقاته وتغليفه الأصلي.
+              </li>
+              <li>
+                <strong>الاستثناءات:</strong> لا يمكن استرجاع المنتجات التي تم
+                استخدامها أو تعديلها أو إتلافها.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-refresh"></i> 2. خيارات الاستبدال</h2>
+          <div class="policy-content">
+            <ul class="policy-list">
+              <li>
+                <strong>المدة الزمنية:</strong> يجب تقديم طلب الاستبدال خلال 10
+                أيام من تاريخ الشراء.
+              </li>
+              <li>
+                <strong>الخيارات:</strong> متاح في حال الرغبة في تغيير المقاس،
+                اللون، أو الموديل (حسب توفر المخزون).
+              </li>
+              <li>
+                <strong>البدائل:</strong> في حال عدم توفر المنتج المطلوب، سنعرض
+                عليكِ استرداد المبلغ أو اختيار منتج آخر.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-truck"></i> 3. كيفية الاسترجاع</h2>
+          <div class="policy-content">
+            <div class="policy-step">
+              <span class="step-number">1.</span>
+              <div>
+                اتصلي بنا على الرقم <strong>0106193198</strong> مع توضيح تفاصيل
+                الطلب وسبب الاسترجاع.
+              </div>
+            </div>
+            <div class="policy-step">
+              <span class="step-number">2.</span>
+              <div>انتظري موافقتنا وتعليمات الاسترجاع من فريقنا.</div>
+            </div>
+            <div class="policy-step">
+              <span class="step-number">3.</span>
+              <div>
+                <strong>ملاحظة:</strong> يتحمل العميل مصاريف الشحن للإرجاع، إلا
+                في حال كان السبب خطأ من جانبنا.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-money"></i> 4. تفاصيل استرداد الأموال</h2>
+          <div class="policy-content">
+            <ul class="policy-list">
+              <li>
+                <strong>التوقيت:</strong> تتم المعالجة خلال 3-5 أيام عمل بعد
+                استلامنا للمنتج المسترجع.
+              </li>
+              <li>
+                <strong>الطريقة:</strong> يتم رد المبلغ إلى حساب الدفع الأصلي
+                الخاص بكِ.
+              </li>
+              <li>
+                <strong>تكاليف الشحن:</strong> رسوم التوصيل الأصلية غير قابلة
+                للاسترداد (إلا في حال وجود خطأ من طرفنا).
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-exclamation-triangle"></i> 5. مشكلة في طلبكِ؟</h2>
+          <div class="policy-content">
+            <p>إذا استلمتِ منتجاً به عيب أو تالف:</p>
+            <ul class="policy-list">
+              <li>اتصلي بنا فوراً على الرقم <strong>0106193198</strong></li>
+              <li>أرسلي صوراً توضح المشكلة</li>
+              <li>سنقوم بترتيب استبدال المنتج أو رد كامل المبلغ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <p>
+            فريق خدمة العملاء لدينا يسعده مساعدتكِ في أي وقت، فقط تواصلوا معنا
+            على <strong>0106193198</strong>
+          </p>
+          <p class="mt-2">
+            شكراً لاختياركِ
+            <strong>ستبرق</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

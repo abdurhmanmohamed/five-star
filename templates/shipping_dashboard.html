@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Shipping Administration</title>
+    <title>إدارة الشحن | فايڤ ستار</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -30,7 +30,7 @@
     <style>
         body {
             background: #fffbfc;
-            font-family: var(--font-body, 'Quicksand', sans-serif);
+            font-family: 'Cairo', sans-serif;
             min-height: 100vh;
         }
 
@@ -41,7 +41,7 @@
         }
 
         .dashboard-hero h2 {
-            font-family: var(--font-heading);
+            font-family: 'Cairo', sans-serif;
             font-weight: 800;
             font-size: 2.5rem;
             color: var(--roma-text);
@@ -73,11 +73,11 @@
         }
 
         .btn-back-soft:hover {
-            color: var(--roma-accent);
+            color: var(--anti-teal);
             background: #fff;
-            transform: translateX(-8px);
-            box-shadow: 0 8px 25px rgba(251, 203, 219, 0.25);
-            border-color: var(--roma-accent);
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(53, 98, 122, 0.2);
+            border-color: var(--anti-teal);
         }
 
         /* Glassmorphism Cards */
@@ -86,13 +86,13 @@
             backdrop-filter: blur(10px);
             border-radius: 25px;
             border: 1px solid rgba(251, 203, 219, 0.3);
-            box-shadow: 0 10px 30px rgba(251, 203, 219, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             padding: 35px;
             margin-bottom: 40px;
         }
 
         .roma-card-title {
-            font-family: var(--font-heading);
+            font-family: 'Cairo', sans-serif;
             font-weight: 700;
             font-size: 1.4rem;
             color: var(--roma-text);
@@ -103,7 +103,7 @@
         }
 
         .roma-card-title i {
-            color: var(--roma-accent);
+            color: var(--anti-terracotta);
         }
 
         /* Add Form Layout */
@@ -124,6 +124,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            text-align: right;
         }
 
         .roma-field label {
@@ -140,17 +141,18 @@
             background: rgba(255, 255, 255, 0.6);
             outline: none;
             transition: all 0.3s ease;
+            text-align: right;
         }
 
         .roma-field input:focus {
-            border-color: var(--roma-accent);
+            border-color: var(--anti-teal);
             background: #fff;
-            box-shadow: 0 8px 20px rgba(251, 203, 219, 0.15);
+            box-shadow: 0 8px 20px rgba(53, 98, 122, 0.1);
         }
 
         .btn-roma-add {
-            background: linear-gradient(135deg, var(--roma-primary), var(--roma-primary-hover));
-            color: white;
+            background: linear-gradient(135deg, var(--anti-terracotta), var(--anti-teal));
+            color: white !important;
             border: none;
             padding: 14px 20px;
             border-radius: 15px;
@@ -161,12 +163,13 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(251, 203, 219, 0.4);
+            box-shadow: 0 8px 15px rgba(53, 98, 122, 0.2);
+            font-family: 'Cairo', sans-serif;
         }
 
         .btn-roma-add:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(251, 203, 219, 0.5);
+            box-shadow: 0 12px 25px rgba(53, 98, 122, 0.3);
         }
 
         /* Modern Table */
@@ -184,6 +187,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             border: none;
+            text-align: right;
         }
 
         .roma-table tr td {
@@ -192,18 +196,19 @@
             border-top: 1px solid rgba(251, 203, 219, 0.1);
             border-bottom: 1px solid rgba(251, 203, 219, 0.1);
             transition: all 0.3s ease;
+            text-align: right;
         }
 
         .roma-table tr td:first-child {
-            border-left: 1px solid rgba(251, 203, 219, 0.1);
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-        }
-
-        .roma-table tr td:last-child {
             border-right: 1px solid rgba(251, 203, 219, 0.1);
             border-top-right-radius: 18px;
             border-bottom-right-radius: 18px;
+        }
+
+        .roma-table tr td:last-child {
+            border-left: 1px solid rgba(251, 203, 219, 0.1);
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
         }
 
         .roma-table tr:hover td {
@@ -220,11 +225,11 @@
 
         .price-badge {
             background: #fff;
-            color: var(--roma-accent);
+            color: var(--anti-terracotta);
             padding: 8px 15px;
             border-radius: 12px;
             font-weight: 800;
-            border: 1px solid rgba(251, 203, 219, 0.4);
+            border: 1px solid rgba(180, 98, 88, 0.2);
         }
 
         .btn-roma-delete {
@@ -242,8 +247,12 @@
 
         .btn-roma-delete:hover {
             background: #ff4d4d;
-            color: #fff;
+            color: #fff !important;
             transform: rotate(10deg);
+        }
+        
+        footer a {
+            text-decoration: none !important;
         }
 
         @media (max-width: 600px) {
@@ -282,8 +291,8 @@
 
     <div class="dashboard-hero">
         <div class="container">
-            <h2>Shipping & Logistics</h2>
-            <p>Manage cities and their respective delivery costs.</p>
+            <h2>إدارة الشحن</h2>
+            <p>إدارة المدن وتكاليف التوصيل الخاصة بكل منها.</p>
         </div>
     </div>
 
@@ -292,31 +301,31 @@
             
             <div class="back-nav">
                 <a href="/dashboard" class="btn-back-soft">
-                    <i class="fa fa-chevron-left"></i>
-                    <span>Back to Dashboard</span>
+                    <i class="fa fa-chevron-right"></i>
+                    <span>العودة للوحة التحكم</span>
                 </a>
             </div>
 
             <!-- ADD SECTION -->
             <div class="roma-card">
                 <div class="roma-card-title">
-                    <i class="fa fa-map-plus"></i>
-                    <span>Add New Destination</span>
+                    <i class="fa fa-map-marker"></i>
+                    <span>إضافة وجهة جديدة</span>
                 </div>
                 
                 <form action="/admin/shipping/add" method="POST" class="roma-add-grid">
                     <div class="roma-field">
-                        <label>City Name / اسم المحافظة</label>
-                        <input type="text" name="city" placeholder="e.g. القاهرة" required dir="auto">
+                        <label>اسم المحافظة / المنطقة</label>
+                        <input type="text" name="city" placeholder="مثال: القاهرة" required dir="rtl">
                     </div>
                     
                     <div class="roma-field">
-                        <label>Shipping Cost (E£)</label>
-                        <input type="number" name="price" placeholder="e.g. 50" required min="0">
+                        <label>تكلفة الشحن (ج.م)</label>
+                        <input type="number" name="price" placeholder="مثال: 50" required min="0">
                     </div>
                     
                     <button type="submit" class="btn-roma-add">
-                        <i class="fa fa-plus-circle"></i> Add City
+                        <i class="fa fa-plus-circle"></i> إضافة مدينة
                     </button>
                 </form>
             </div>
@@ -325,16 +334,16 @@
             <div class="roma-card" style="background: rgba(255,255,255,0.4)">
                 <div class="roma-card-title">
                     <i class="fa fa-globe"></i>
-                    <span>Active Shipping Rates</span>
+                    <span>أسعار الشحن الحالية</span>
                 </div>
 
                 <div class="table-responsive">
                     <table class="roma-table">
                         <thead>
                             <tr>
-                                <th>City / Area</th>
-                                <th>Rate (E£)</th>
-                                <th style="width: 80px">Action</th>
+                                <th>المدينة / المنطقة</th>
+                                <th>السعر (ج.م)</th>
+                                <th style="width: 80px">الإجراء</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -344,11 +353,11 @@
                                     <span class="city-name">{{ item.city }}</span>
                                 </td>
                                 <td>
-                                    <span class="price-badge">{{ item.price }} E£</span>
+                                    <span class="price-badge">{{ item.price }} ج.م</span>
                                 </td>
                                 <td>
-                                    <form action="/admin/shipping/delete/{{ item.id }}" method="POST" onsubmit="return confirm('Remove shipping rate for {{ item.city }}?')">
-                                        <button type="submit" class="btn-roma-delete" title="Delete Destination">
+                                    <form action="/admin/shipping/delete/{{ item.id }}" method="POST" onsubmit="return confirm('حذف سعر الشحن لـ {{ item.city }}؟')">
+                                        <button type="submit" class="btn-roma-delete" title="حذف الوجهة">
                                             <i class="fa fa-trash-o"></i>
                                         </button>
                                     </form>
@@ -357,7 +366,7 @@
                             {% else %}
                             <tr>
                                 <td colspan="3" style="text-align: center; color: #999; padding: 40px;">
-                                    No shipping data available. Please add some cities!
+                                    لا توجد بيانات شحن متاحة. يرجى إضافة بعض المدن!
                                 </td>
                             </tr>
                             {% endfor %}
@@ -373,3 +382,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

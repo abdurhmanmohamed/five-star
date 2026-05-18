@@ -26,10 +26,10 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT':
 login_manager = LoginManager(app)
 app.secret_key='abdomohamed'
 # app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL") 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.khuigcpzkndpexeyctgr:abdo_mohame@aws-0-eu-west-1.pooler.supabase.com:6543/postgres"
-SUPABASE_URL = 'https://khuigcpzkndpexeyctgr.supabase.co'
-SUPABASE_KEY = 'sb_publishable_yCWWFk54uUtEm87hTim-_g_2zElFns1'
-BUCKET = 'abdo'
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.yhjnathafjhaqbuzzcql:abdo_mohamd@aws-0-eu-west-1.pooler.supabase.com:6543/postgres"
+SUPABASE_URL = 'https://yhjnathafjhaqbuzzcql.supabase.co'
+SUPABASE_KEY = 'sb_publishable_Mce89B-UqmCCIbGzXIBcoA_L6xoQyTQ'
+BUCKET = 'data'
 login_manager.login_view = 'login'
 class Base(DeclarativeBase):
     pass
@@ -305,10 +305,10 @@ def check_out():
 def dashboard():
     return render_template('dashboard.html')
 
-# @app.route('/admin/returns')
-# @login_required
-# def return_dashboard():
-#     return render_template('return_dashboard.html')
+@app.route('/admin/returns')
+@login_required
+def return_dashboard():
+    return render_template('return_dashboard.html')
 
 @app.route('/admin/shipping')
 @login_required

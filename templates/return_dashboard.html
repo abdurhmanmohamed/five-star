@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Returns & Settlements | Romaire Boutique</title>
+    <title>المرتجعات والتسويات | فايف ستار</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -40,7 +40,7 @@
     <style>
       body {
         background: #fffbfc;
-        font-family: var(--font-body, "Quicksand", sans-serif);
+        font-family: "Cairo", sans-serif;
         min-height: 100vh;
       }
 
@@ -51,7 +51,7 @@
       }
 
       .dashboard-hero h2 {
-        font-family: var(--font-heading);
+        font-family: "Cairo", sans-serif;
         font-weight: 800;
         font-size: 2.8rem;
         color: var(--roma-text);
@@ -97,7 +97,7 @@
       .btn-roma-soft:hover {
         color: var(--roma-accent);
         background: #fff;
-        transform: translateX(-8px);
+        transform: translateX(8px);
         box-shadow: 0 8px 25px rgba(251, 203, 219, 0.25);
         border-color: var(--roma-accent);
       }
@@ -105,8 +105,8 @@
       .btn-roma-accent {
         background: linear-gradient(
           135deg,
-          var(--roma-primary),
-          var(--roma-primary-hover)
+          var(--anti-terracotta),
+          var(--anti-teal)
         );
         color: white;
         border: none;
@@ -116,7 +116,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        box-shadow: 0 8px 20px rgba(251, 203, 219, 0.3);
+        box-shadow: 0 8px 20px rgba(53, 98, 122, 0.2);
         text-decoration: none;
         transition: all 0.3s ease;
       }
@@ -124,7 +124,7 @@
       .btn-roma-accent:hover {
         color: white;
         transform: translateY(-3px);
-        box-shadow: 0 12px 25px rgba(251, 203, 219, 0.4);
+        box-shadow: 0 12px 25px rgba(53, 98, 122, 0.3);
       }
 
       /* Tabs Styling */
@@ -145,7 +145,7 @@
         border-radius: 16px;
         font-weight: 800;
         color: #b0a4a7;
-        font-family: var(--font-heading);
+        font-family: "Cairo", sans-serif;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         cursor: pointer;
         letter-spacing: 0.5px;
@@ -196,8 +196,8 @@
 
       .roma-order-card:hover {
         transform: translateY(-8px) scale(1.01);
-        border-color: var(--roma-accent);
-        box-shadow: 0 20px 45px rgba(251, 203, 219, 0.3);
+        border-color: var(--anti-teal);
+        box-shadow: 0 20px 45px rgba(53, 98, 122, 0.2);
         background: #fff;
       }
 
@@ -206,6 +206,7 @@
         font-weight: 700;
         color: var(--roma-text);
         margin: 0 0 5px;
+        text-align: right;
       }
 
       .order-info p {
@@ -213,24 +214,25 @@
         margin: 0;
         font-size: 0.95rem;
         font-family: "Cairo", sans-serif;
+        text-align: right;
       }
 
       .order-side {
-        text-align: right;
+        text-align: left;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        align-items: flex-end;
+        align-items: flex-start;
       }
 
       .order-price {
         font-weight: 800;
-        color: var(--roma-accent);
+        color: var(--anti-terracotta);
         font-size: 1.25rem;
-        background: rgba(251, 203, 219, 0.1);
+        background: rgba(180, 98, 88, 0.05);
         padding: 6px 14px;
         border-radius: 12px;
-        border: 1px solid rgba(251, 203, 219, 0.2);
+        border: 1px solid rgba(180, 98, 88, 0.1);
       }
 
       .btn-settle {
@@ -257,7 +259,7 @@
       /* Settlement Specific Fly-out */
       @keyframes romaFly {
         to {
-          transform: translate(100px, -100px) scale(0.5);
+          transform: translate(-100px, -100px) scale(0.5);
           opacity: 0;
         }
       }
@@ -298,7 +300,8 @@
       .modal-close {
         position: absolute;
         top: 25px;
-        right: 25px;
+        left: 25px;
+        right: auto;
         background: #fdf6f7;
         border: none;
         width: 40px;
@@ -313,7 +316,7 @@
       }
 
       .modal-close:hover {
-        background: var(--roma-accent);
+        background: var(--anti-teal);
         color: white;
         transform: rotate(90deg);
       }
@@ -321,12 +324,16 @@
       .modal-badge {
         display: inline-block;
         padding: 5px 15px;
-        background: rgba(251, 203, 219, 0.2);
-        color: var(--roma-accent);
+        background: rgba(180, 98, 88, 0.1);
+        color: var(--anti-terracotta);
         border-radius: 10px;
         font-size: 0.8rem;
         font-weight: 800;
         margin-bottom: 15px;
+      }
+
+      footer a {
+        text-decoration: none !important;
       }
 
       /* Mobile Adjustments */
@@ -379,9 +386,9 @@
 
     <div class="dashboard-hero">
       <div class="container">
-        <span class="modal-badge">Admin Control</span>
-        <h2>Returns & Settlements</h2>
-        <p>Processing returned merchandise and finalizing settlements.</p>
+        <span class="modal-badge">لوحة الإدارة</span>
+        <h2>المرتجعات والتسويات</h2>
+        <p>معالجة البضائع المرتجعة وإتمام التسويات النهائية.</p>
       </div>
     </div>
 
@@ -389,11 +396,11 @@
       <div class="admin-nav-bar">
         <a href="/dashboard" class="btn-roma-soft">
           <i class="fa fa-chevron-left"></i>
-          <span>Dashboard</span>
+          <span>لوحه التحكم</span>
         </a>
         <a href="/admin/shipping" class="btn-roma-accent">
           <i class="fa fa-truck"></i>
-          <span>Manage Shipping</span>
+          <span>إدارة الشحن</span>
         </a>
       </div>
 
@@ -403,14 +410,14 @@
           data-target="returned"
           onclick="getOrders('returned')"
         >
-          Returned Orders
+          طلبات مرتجعة
         </button>
         <button
           class="roma-tab-btn"
           data-target="setteled"
           onclick="getOrders('setteled')"
         >
-          Fully Settled
+          تمت التسوية
         </button>
       </div>
 
@@ -435,23 +442,25 @@
           <i class="fa fa-times"></i>
         </button>
 
-        <div class="modal-header d-block">
-          <span class="modal-badge" id="orderDate">Date</span>
+        <div class="modal-header d-block text-right">
+          <span class="modal-badge" id="orderDate">التاريخ</span>
           <h2
             id="customerName"
             class="mt-2"
-            style="font-family: var(--font-heading); font-weight: 800"
+            style="font-family: &quot;Cairo&quot;, sans-serif; font-weight: 800"
           >
-            Customer Name
+            اسم العميل
           </h2>
         </div>
 
-        <div class="row g-3 mt-4">
+        <div class="row g-3 mt-4 text-right">
           <div class="col-6">
             <div
               style="background: #fdf6f7; padding: 15px; border-radius: 15px"
             >
-              <label class="d-block small fw-bold text-muted mb-1">Phone</label>
+              <label class="d-block small fw-bold text-muted mb-1"
+                >الهاتف</label
+              >
               <p id="customerPhone" class="m-0 fw-bold"></p>
             </div>
           </div>
@@ -459,11 +468,13 @@
             <div
               style="background: #fdf6f7; padding: 15px; border-radius: 15px"
             >
-              <label class="d-block small fw-bold text-muted mb-1">City</label>
+              <label class="d-block small fw-bold text-muted mb-1"
+                >المدينة</label
+              >
               <p
                 id="customerCity"
                 class="m-0 fw-bold"
-                style="font-family: &quot;Cairo&quot;"
+                style="font-family: &quot;Cairo&quot;, sans-serif"
               ></p>
             </div>
           </div>
@@ -472,41 +483,41 @@
               style="background: #fdf6f7; padding: 15px; border-radius: 15px"
             >
               <label class="d-block small fw-bold text-muted mb-1"
-                >Shipping Address</label
+                >عنوان الشحن</label
               >
               <p
                 id="customerAddress"
                 class="m-0 fw-bold"
-                style="font-family: &quot;Cairo&quot;"
+                style="font-family: &quot;Cairo&quot;, sans-serif"
               ></p>
             </div>
           </div>
         </div>
 
         <div
-          class="mt-4"
+          class="mt-4 text-right"
           style="background: #fdf6f7; padding: 15px; border-radius: 15px"
         >
           <label class="d-block small fw-bold text-muted mb-1"
-            >Customer Notes</label
+            >ملاحظات العميل</label
           >
           <p
             id="customerMessage"
             class="m-0"
-            style="font-family: &quot;Cairo&quot;"
+            style="font-family: &quot;Cairo&quot;, sans-serif"
           ></p>
         </div>
 
-        <div class="mt-5">
+        <div class="mt-5 text-right">
           <h4
             style="
-              font-family: var(--font-heading);
+              font-family: &quot;Cairo&quot;, sans-serif;
               font-weight: 700;
               font-size: 1.1rem;
             "
             class="mb-3"
           >
-            Ordered Items
+            الأصناف المطلوبة
           </h4>
           <div id="orderedItems">
             <!-- Items via JS -->
@@ -578,14 +589,14 @@
             <p style="font-family: 'Cairo';">${itemsText}</p>
           </div>
           <div class="order-side">
-            <span class="order-price">${total} E£</span>
+            <span class="order-price">${total} ج.م</span>
           </div>
         `;
 
         if (order.state === "returned") {
           const btn = document.createElement("button");
           btn.className = "btn-settle";
-          btn.innerHTML = `<i class="fa fa-check-circle-o"></i> Settle Order`;
+          btn.innerHTML = `<i class="fa fa-check-circle-o"></i> إتمام التسوية`;
 
           btn.onclick = (e) => {
             e.stopPropagation();
@@ -645,27 +656,30 @@
             document.getElementById("customerAddress").textContent =
               data.adress;
             document.getElementById("orderDate").textContent = data.created_at;
-            document.getElementById("customerSecondPhone").textContent =
-              data.second_number;
+            document.getElementById("customerSecondPhone")
+              ? (document.getElementById("customerSecondPhone").textContent =
+                  data.second_number)
+              : null;
             document.getElementById("orderedItems").innerHTML = "";
+
             data.ordered_items.forEach(function (item) {
               let cartElement = `
-                	<div class="order-item">
-						<div class="item-image">
-							<img src="${item.img}">
-						</div>
+                <div class="order-item d-flex align-items-center mb-3" style="gap: 15px;">
+                  <div class="item-image" style="width: 60px; height: 60px; overflow: hidden; border-radius: 10px;">
+                    <img src="${item.img}" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
 
-						<div class="item-info">
-							<h4 class="item-name" style="font-family:  'Cairo', 'sans-serif';">${item.name}</h4>
-							<div class="item-meta">
-								<span style="font-family:  'Cairo', 'sans-serif';">${item.color}</span>
-								<span>${item.size}</span>
-							</div>
-						</div>
+                  <div class="item-info">
+                    <h4 class="item-name m-0" style="font-family: 'Cairo', sans-serif; font-size: 1rem;">${item.name}</h4>
+                    <div class="item-meta small text-muted">
+                      <span style="font-family: 'Cairo', sans-serif;">اللون: ${item.color}</span>
+                      <span class="ms-2">المقاس: ${item.size}</span>
+                    </div>
+                  </div>
 
-						<div class="item-amount">x${item.amount}</div>
-					</div>
-                `;
+                  <div class="item-amount ms-auto fw-bold">x${item.amount}</div>
+                </div>
+              `;
               document
                 .getElementById("orderedItems")
                 .insertAdjacentHTML("beforeend", cartElement);

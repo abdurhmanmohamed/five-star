@@ -736,18 +736,18 @@
           gap: 15px;
         "
       >
-        <!-- <a href="/admin/returns" class="manage-btn manage-return">
+        <a href="/admin/returns" class="manage-btn manage-return">
           <i class="fa fa-undo"></i> Manage Returns
-        </a> -->
+        </a>
         <a href="/admin/shipping" class="manage-btn manage-shipping">
           <i class="fa fa-truck"></i>إداره أسعار الشحن
         </a>
-        <!-- <a
+        <a
           href="{{ url_for('admin_analysis') }}"
           class="manage-btn manage-analysis"
         >
           <i class="fa fa-line-chart"></i> Business Insights
-        </a> -->
+        </a>
       </div>
       <div class="top-buttons">
         <button
@@ -934,21 +934,21 @@
           card.querySelector(".order-side").appendChild(btn);
         }
 
-        // if (order.state === "packaged" || order.state === "done") {
-        //   const btnReturned = document.createElement("button");
-        //   btnReturned.className = "order-btn btn-returned";
-        //   btnReturned.innerHTML = `<i class="fa fa-undo"></i> Returned`;
-        //   btnReturned.style.marginLeft = "12px";
+        if (order.state === "packaged" || order.state === "done") {
+          const btnReturned = document.createElement("button");
+          btnReturned.className = "order-btn btn-returned";
+          btnReturned.innerHTML = `<i class="fa fa-undo"></i> Returned`;
+          btnReturned.style.marginLeft = "12px";
 
-        //   btnReturned.onclick = (e) => {
-        //     e.stopPropagation();
-        //     card.classList.add("fly-out");
-        //     setTimeout(() => {
-        //       updateOrderState(order.id, "returned");
-        //     }, 550);
-        //   };
-        //   card.querySelector(".order-side").appendChild(btnReturned);
-        // }
+          btnReturned.onclick = (e) => {
+            e.stopPropagation();
+            card.classList.add("fly-out");
+            setTimeout(() => {
+              updateOrderState(order.id, "returned");
+            }, 550);
+          };
+          card.querySelector(".order-side").appendChild(btnReturned);
+        }
 
         return card;
       }
@@ -1015,6 +1015,7 @@
 							<h4 class="item-name" style="font-family:  'Cairo', 'sans-serif';">${item.name}</h4>
 							<div class="item-meta">
 								<span style="font-family:  'Cairo', 'sans-serif';">${item.color}</span>
+								${item.size ? `<span style="font-family: 'Cairo', 'sans-serif';">${item.size}</span>` : ''}
 							</div>
 						</div>
  

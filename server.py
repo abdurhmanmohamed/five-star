@@ -18,6 +18,7 @@ from flask_compress import Compress
 from flask_caching import Cache
 from sqlalchemy.orm import joinedload
 import os
+import json
 app= Flask(__name__)
 Compress(app)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 300})
@@ -716,57 +717,60 @@ def admin_analysis():
     from sqlalchemy import func
     from datetime import datetime, timedelta
     
-#     # 1. Total Stats
-#     total_orders = Order.query.count()
-#     total_revenue = db.session.query(func.sum(Order.total_price)).scalar() or 0
+    # 1. Total Stats
+    total_orders = Order.query.count()
+    total_revenue = db.session.query(func.sum(Order.total_price)).scalar() or 0
     
-#     # 2. State Breakdown (Pie/Doughnut)
-#     states = db.session.query(Order.state, func.count(Order.id)).group_by(Order.state).all()
-#     state_labels = [s[0].capitalize() for s in states]
-#     state_data = [s[1] for s in states]
+    # 2. State Breakdown (Pie/Doughnut)
+    states = db.session.query(Order.state, func.count(Order.id)).group_by(Order.state).all()
+    state_labels = [s[0].capitalize() for s in states]
+    state_data = [s[1] for s in states]
     
-#     # 3. City Revenue (Doughnut)
-#     cities = db.session.query(Order.city, func.sum(Order.total_price)).group_by(Order.city).order_by(func.sum(Order.total_price).desc()).limit(7).all()
-#     city_labels = [c[0] for c in cities]
-#     city_data = [int(c[1] or 0) for c in cities]
+    # 3. City Revenue (Doughnut)
+    cities = db.session.query(Order.city, func.sum(Order.total_price)).group_by(Order.city).order_by(func.sum(Order.total_price).desc()).limit(7).all()
+    city_labels = [c[0] for c in cities]
+    city_data = [int(c[1] or 0) for c in cities]
     
-#     # 4. Weekly Revenue & Orders (Line/Bar)
-#     # Get last 8 weeks of data
-#     eight_weeks_ago = datetime.utcnow() - timedelta(weeks=8)
-#     weekly_data = db.session.query(
-#         Order.created_at, 
-#         Order.total_price
-#     ).filter(Order.created_at >= eight_weeks_ago).all()
+    # 4. Weekly Revenue & Orders (Line/Bar)
+    # Get last 8 weeks of data
+    eight_weeks_ago = datetime.utcnow() - timedelta(weeks=8)
+    weekly_data = db.session.query(
+        Order.created_at, 
+        Order.total_price
+    ).filter(Order.created_at >= eight_weeks_ago).all()
     
-#     # Group in Python for cross-DB compatibility (SQLite vs Postgres date functions)
-#     weeks = {}
-#     for i in range(8):
-#         start_of_week = (datetime.utcnow() - timedelta(weeks=i)).isocalendar()[1]
-#         weeks[start_of_week] = {"rev": 0, "ord": 0}
+    # Group in Python for cross-DB compatibility (SQLite vs Postgres date functions)
+    weeks = {}
+    current_now = datetime.utcnow()
+    for i in range(8):
+        start_date = (current_now - timedelta(days=current_now.weekday(), weeks=i)).date()
+        weeks[start_date] = {"rev": 0, "ord": 0}
         
-#     for o_date, o_price in weekly_data:
-#         w_num = o_date.isocalendar()[1]
-#         if w_num in weeks:
-#             weeks[w_num]["rev"] += (o_price or 0)
-#             weeks[w_num]["ord"] += 1
+    for o_date, o_price in weekly_data:
+        if o_date:
+            o_date_obj = o_date.date()
+            for start_date in sorted(weeks.keys(), reverse=True):
+                if o_date_obj >= start_date:
+                    weeks[start_date]["rev"] += (o_price or 0)
+                    weeks[start_date]["ord"] += 1
+                    break
             
-#     # Sort weeks chronologically
-#     sorted_weeks = sorted(weeks.items())
-#     weekly_labels = [f"Week {w[0]}" for w in sorted_weeks]
-#     weekly_rev_data = [w[1]["rev"] for w in sorted_weeks]
-#     weekly_ord_data = [w[1]["ord"] for w in sorted_weeks]
+    # Sort weeks chronologically
+    sorted_weeks = sorted(weeks.items())
+    weekly_labels = [w[0].strftime("%b %d") for w in sorted_weeks]
+    weekly_rev_data = [w[1]["rev"] for w in sorted_weeks]
+    weekly_ord_data = [w[1]["ord"] for w in sorted_weeks]
     
-#     charts_data = {
-#         "state_breakdown": {"labels": state_labels, "data": state_data},
-#         "city_revenue": {"labels": city_labels, "data": city_data},
-#         "weekly_revenue": {"labels": weekly_labels, "data": weekly_rev_data},
-#         "weekly_orders": {"labels": weekly_labels, "data": weekly_ord_data}
-#     }
+    charts_data = {
+        "state_breakdown": {"labels": state_labels, "data": state_data},
+        "city_revenue": {"labels": city_labels, "data": city_data},
+        "weekly_revenue": {"labels": weekly_labels, "data": weekly_rev_data},
+        "weekly_orders": {"labels": weekly_labels, "data": weekly_ord_data}
+    }
     
-#     import json
-#     return render_template("analysis.html", 
-#                            total_orders=total_orders, 
-#                            total_revenue=int(total_revenue),
-#                            charts_data=json.dumps(charts_data))
+    return render_template("analysis.html", 
+                           total_orders=total_orders, 
+                           total_revenue=int(total_revenue),
+                           charts_data=json.dumps(charts_data))
 if __name__ == '__main__':
     app.run(debug=True)

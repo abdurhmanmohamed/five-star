@@ -410,73 +410,37 @@
                 <option value="">-- اختر القسم --</option>
                 <option
                   value="women"
-                  {%
-                  if
-                  item.category=""
-                  ="women"
-                  %}selected{%
-                  endif
-                  %}
+                  {% if item.category == "women" %}selected{% endif %}
                 >
                   👩 حريمي
                 </option>
                 <option
                   value="men"
-                  {%
-                  if
-                  item.category=""
-                  ="men"
-                  %}selected{%
-                  endif
-                  %}
+                  {% if item.category == "men" %}selected{% endif %}
                 >
                   👨 رجالي
                 </option>
                 <option
                   value="kids"
-                  {%
-                  if
-                  item.category=""
-                  ="kids"
-                  %}selected{%
-                  endif
-                  %}
+                  {% if item.category == "kids" %}selected{% endif %}
                 >
                   👶 أطفال
                 </option>
                 <option
                   value="accessories"
-                  {%
-                  if
-                  item.category=""
-                  ="accessories"
-                  %}selected{%
-                  endif
-                  %}
+                  {% if item.category == "accessories" %}selected{% endif %}
                 >
                   👜 أكسسوارات
                 </option>
                 <option
                   value="hot"
-                  {%
-                  if
-                  item.category=""
-                  ="hot"
-                  %}selected{%
-                  endif
-                  %}
+                  {% if item.category == "hot" %}selected{% endif %}
                 >
                   🔥 عروض ساخنة
                 </option>
                 <option
                   value="top"
-                  {%
-                  if
-                  item.category=""
-                  ="top"
-                  %}selected{%
-                  endif
-                  %}
+                  {% if item.category == "top" %}selected{% endif %}
                 >
                   🌟 الأكثر مبيعاً
                 </option>

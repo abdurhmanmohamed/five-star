@@ -153,6 +153,20 @@
             });
         });
 
+        // Staggered layout refreshes to fix "condensed" items on load
+        // This handles cases where images might load slightly after window.load or animsition state changes
+        setTimeout(function() {
+            $topeContainer.isotope('layout');
+        }, 500);
+
+        setTimeout(function() {
+            $topeContainer.isotope('layout');
+        }, 1500);
+
+        setTimeout(function() {
+            $topeContainer.isotope('layout');
+        }, 2500);
+
         // Auto-filter based on URL parameter
         var urlParams = new URLSearchParams(window.location.search);
         var filter = urlParams.get('filter');

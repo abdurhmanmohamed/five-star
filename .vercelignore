@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+instance/
+*.db
+fivestar passwords.txt
+.git/
+.vercel/
+*.log

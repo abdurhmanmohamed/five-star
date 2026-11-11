@@ -3,7 +3,25 @@ from datetime import datetime
 
 import base64
 import uuid
-import imghdr
+try:
+    import imghdr
+except ImportError:  # Python 3.13+ removed imghdr — minimal shim, same behaviour
+    class _ImgHdrShim:
+        @staticmethod
+        def what(h, b):
+            if b[:8] == b"\x89PNG\r\n\x1a\n":
+                return "png"
+            if b[:3] == b"\xff\xd8\xff":
+                return "jpeg"
+            if b[:6] in (b"GIF87a", b"GIF89a"):
+                return "gif"
+            if b[:4] == b"RIFF" and b[8:12] == b"WEBP":
+                return "webp"
+            if b[:2] == b"BM":
+                return "bmp"
+            return None
+
+    imghdr = _ImgHdrShim()
 import requests
 from flask import Flask, flash,session
 from flask import render_template, url_for, redirect, request,jsonify
@@ -20,17 +38,37 @@ from sqlalchemy.orm import joinedload
 import os
 import json
 app= Flask(__name__)
+# --- Performance (no logic change): gzip/brotli + long-lived static caching ---
+# Flask-Compress already enabled below; these settings only tune it.
+app.config.update(
+    SEND_FILE_MAX_AGE_DEFAULT=31536000,
+    COMPRESS_MIMETYPES=[
+        "text/html", "text/css", "text/plain", "text/xml",
+        "application/json", "application/javascript", "text/javascript",
+        "application/xml", "image/svg+xml",
+    ],
+    COMPRESS_LEVEL=6,
+    COMPRESS_MIN_SIZE=500,
+    # Small pool + pre-ping: fewer stale-connection retries on serverless
+    # cold starts against the Supabase pooler (port 6543, transaction mode).
+    SQLALCHEMY_ENGINE_OPTIONS={
+        "pool_pre_ping": True,
+        "pool_recycle": 300,
+        "pool_size": 5,
+        "max_overflow": 10,
+    },
+)
 Compress(app)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 300})
 
 # app.register_blueprint(analytics_bp)
 login_manager = LoginManager(app)
-app.secret_key='abdomohamed'
-# app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL") 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.yhjnathafjhaqbuzzcql:abdo_mohamd@aws-0-eu-west-1.pooler.supabase.com:6543/postgres"
-SUPABASE_URL = 'https://yhjnathafjhaqbuzzcql.supabase.co'
-SUPABASE_KEY = 'sb_publishable_Mce89B-UqmCCIbGzXIBcoA_L6xoQyTQ'
-BUCKET = 'data'
+# Env override with identical defaults — behaviour unchanged unless env is set.
+app.secret_key=os.getenv("SECRET_KEY", "abdomohamed")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "postgresql://postgres.yhjnathafjhaqbuzzcql:abdo_mohamd@aws-0-eu-west-1.pooler.supabase.com:6543/postgres")
+SUPABASE_URL = os.getenv("SUPABASE_URL", 'https://yhjnathafjhaqbuzzcql.supabase.co')
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", 'sb_publishable_Mce89B-UqmCCIbGzXIBcoA_L6xoQyTQ')
+BUCKET = os.getenv("SUPABASE_BUCKET", 'data')
 login_manager.login_view = 'login'
 class Base(DeclarativeBase):
     pass
@@ -125,32 +163,62 @@ class ShippingPrice(db.Model):
 
 
 
-with app.app_context():
-    db.create_all()
-    from sqlalchemy import text, inspect
-    inspector = inspect(db.engine)
+# --- Cold-start fix (same tables/migrations, deferred timing only) ---
+# Previously db.create_all() + inspector ran at import time, so EVERY
+# serverless cold start paid a DB handshake + schema inspection before
+# serving anything (including static files). Now it runs lazily, once per
+# process, on the first non-static request. Import is instant and static
+# assets never wait on the database.
+_db_initialized = False
 
-    # Migrate 'order' table for total_price
-    if 'order' in inspector.get_table_names():
-        order_columns = [col["name"] for col in inspector.get_columns("order")]
-        if "total_price" not in order_columns:
-            try:
-                db.session.execute(text('ALTER TABLE "order" ADD COLUMN total_price INTEGER'))
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                print(f"Migration error (order table): {e}")
 
-    # Migrate 'itemdetails' table for category
-    if 'itemdetails' in inspector.get_table_names():
-        item_columns = [col["name"] for col in inspector.get_columns("itemdetails")]
-        if "category" not in item_columns:
-            try:
-                db.session.execute(text("ALTER TABLE itemdetails ADD COLUMN category VARCHAR(50) DEFAULT ''"))
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                print(f"Migration error (itemdetails table): {e}")
+def _init_db():
+    global _db_initialized
+    if _db_initialized:
+        return
+    with app.app_context():
+        db.create_all()
+        from sqlalchemy import text, inspect
+        inspector = inspect(db.engine)
+
+        # Migrate 'order' table for total_price
+        if 'order' in inspector.get_table_names():
+            order_columns = [col["name"] for col in inspector.get_columns("order")]
+            if "total_price" not in order_columns:
+                try:
+                    db.session.execute(text('ALTER TABLE "order" ADD COLUMN total_price INTEGER'))
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    print(f"Migration error (order table): {e}")
+
+        # Migrate 'itemdetails' table for category
+        if 'itemdetails' in inspector.get_table_names():
+            item_columns = [col["name"] for col in inspector.get_columns("itemdetails")]
+            if "category" not in item_columns:
+                try:
+                    db.session.execute(text("ALTER TABLE itemdetails ADD COLUMN category VARCHAR(50) DEFAULT ''"))
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    print(f"Migration error (itemdetails table): {e}")
+    _db_initialized = True
+
+
+@app.before_request
+def _ensure_db_once():
+    # Static files must never trigger (or wait on) database initialisation.
+    if request.path.startswith("/static/"):
+        return
+    _init_db()
+
+
+@app.after_request
+def _perf_cache_headers(response):
+    # Fallback for local dev; on Vercel the edge headers in vercel.json win.
+    if request.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+    return response
 
 
 @login_manager.user_loader

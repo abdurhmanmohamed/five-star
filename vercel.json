@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/index.py" }],
   "headers": [
     {
       "source": "/static/(.*)",
@@ -24,7 +23,7 @@
     }
   ],
   "functions": {
-    "api/index.py": {
+    "server.py": {
       "maxDuration": 60,
       "regions": ["fra1"]
     }

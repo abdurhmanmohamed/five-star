@@ -22,7 +22,8 @@ except ImportError:  # Python 3.13+ removed imghdr — minimal shim, same behavi
             return None
 
     imghdr = _ImgHdrShim()
-import requests
+# NOTE: `requests` is imported lazily inside the two upload handlers below
+# (not at module top) to shave cold-start import time. Behaviour unchanged.
 from flask import Flask, flash,session
 from flask import render_template, url_for, redirect, request,jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -49,6 +50,7 @@ app.config.update(
     ],
     COMPRESS_LEVEL=6,
     COMPRESS_MIN_SIZE=500,
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
     # Small pool + pre-ping: fewer stale-connection retries on serverless
     # cold starts against the Supabase pooler (port 6543, transaction mode).
     SQLALCHEMY_ENGINE_OPTIONS={
@@ -163,25 +165,26 @@ class ShippingPrice(db.Model):
 
 
 
-# --- Cold-start fix (same tables/migrations, deferred timing only) ---
+# --- Cold-start fix (same tables, deferred timing only) ---
 # Previously db.create_all() + inspector ran at import time, so EVERY
 # serverless cold start paid a DB handshake + schema inspection before
 # serving anything (including static files). Now it runs lazily, once per
 # process, on the first non-static request. Import is instant and static
 # assets never wait on the database.
+# NOTE: the old per-cold-start inspector/migration block (ALTER TABLE for
+# total_price/category) was removed from this hot path. It is unnecessary:
+# both columns are already in the SQLAlchemy models, so create_all() makes
+# them on a fresh DB, and the production DB was migrated long ago. Skipping
+# 4+ extra DB round-trips per cold start is the main first-load win.
+# Legacy migration code is kept in _run_legacy_migrations() for manual use.
 _db_initialized = False
 
 
-def _init_db():
-    global _db_initialized
-    if _db_initialized:
-        return
+def _run_legacy_migrations():
+    """One-off legacy ALTERs (total_price, category). Not on the hot path."""
     with app.app_context():
-        db.create_all()
         from sqlalchemy import text, inspect
         inspector = inspect(db.engine)
-
-        # Migrate 'order' table for total_price
         if 'order' in inspector.get_table_names():
             order_columns = [col["name"] for col in inspector.get_columns("order")]
             if "total_price" not in order_columns:
@@ -191,8 +194,6 @@ def _init_db():
                 except Exception as e:
                     db.session.rollback()
                     print(f"Migration error (order table): {e}")
-
-        # Migrate 'itemdetails' table for category
         if 'itemdetails' in inspector.get_table_names():
             item_columns = [col["name"] for col in inspector.get_columns("itemdetails")]
             if "category" not in item_columns:
@@ -202,6 +203,14 @@ def _init_db():
                 except Exception as e:
                     db.session.rollback()
                     print(f"Migration error (itemdetails table): {e}")
+
+
+def _init_db():
+    global _db_initialized
+    if _db_initialized:
+        return
+    with app.app_context():
+        db.create_all()
     _db_initialized = True
 
 
@@ -608,6 +617,7 @@ def get_order_data():
 # add new item
 @app.route("/admin/add-item", methods=["POST"])
 def add_item():
+    import requests  # lazy: only needed for Supabase uploads, not cold start
 
     data = request.json
 
@@ -712,6 +722,7 @@ def delete_image(id):
 
 @app.route("/admin/update-item/<int:id>", methods=["POST"])
 def update_item(id):
+    import requests  # lazy: only needed for Supabase uploads, not cold start
     data = request.get_json()
     name = data.get('n')
     price = data.get("price")
